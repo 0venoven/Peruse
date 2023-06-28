@@ -1,0 +1,14 @@
+Login                X
+Captcha              ?
+Tutorial             V
+Auto detect networks around and capture IP addresses      ?
+Reporting            V (clean up + if can save or export do we even need this)
+- Recommendation       Dictionary/database for now?
+Save output          V (requires the use of either database or export function)
+Fingerprinting       X
+LinPEAS              ?
+Scoring              ?
+Sending data         V (dk whether that's the kind of data we want)
+Data analytics       ???
+
+Try IOTInspector     V
