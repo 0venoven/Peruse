@@ -140,8 +140,3 @@ class Peruse(QMainWindow, Ui_Peruse):
 
     def aboutQt(self):
         QApplication.aboutQt()
-
-app = QApplication(sys.argv)
-peruse = Peruse(app)
-peruse.show()
-sys.exit(app.exec_())
