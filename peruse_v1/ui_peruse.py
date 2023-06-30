@@ -18,8 +18,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
     QLineEdit, QMainWindow, QMenu, QMenuBar,
-    QProgressBar, QPushButton, QSizePolicy, QStatusBar,
-    QTextBrowser, QVBoxLayout, QWidget)
+    QPushButton, QSizePolicy, QStatusBar, QTextBrowser,
+    QVBoxLayout, QWidget)
 
 class Ui_Peruse(object):
     def setupUi(self, Peruse):
@@ -57,19 +57,6 @@ class Ui_Peruse(object):
         self.scan_button.setObjectName(u"scan_button")
 
         self.horizontalLayout.addWidget(self.scan_button)
-
-        self.line_2 = QFrame(self.centralwidget)
-        self.line_2.setObjectName(u"line_2")
-        self.line_2.setFrameShape(QFrame.VLine)
-        self.line_2.setFrameShadow(QFrame.Sunken)
-
-        self.horizontalLayout.addWidget(self.line_2)
-
-        self.scan_progress_bar = QProgressBar(self.centralwidget)
-        self.scan_progress_bar.setObjectName(u"scan_progress_bar")
-        self.scan_progress_bar.setValue(24)
-
-        self.horizontalLayout.addWidget(self.scan_progress_bar)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
