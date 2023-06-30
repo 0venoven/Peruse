@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import platform
 import sys
 from ScanThread import ScanThread
+from Database import Database
 
 from ui_peruse import Ui_Peruse
 
@@ -23,6 +24,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.scan_button.clicked.connect(self.scan)
 
         self.scan_thread = None
+        self.db_path = r"results.db"
 
     def quit(self):
         self.app.quit()
@@ -32,6 +34,20 @@ class Peruse(QMainWindow, Ui_Peruse):
 
     def filter(self):
         self.app.quit()  # TODO: Replace with filter function
+    
+    def save(self):
+        # TODO: get values from UI
+        Database.insert_result(self.db_path, "yes", 1)
+    
+    def view_all(self):
+        final = Database.get_results(self.db_path)
+        for row in final:
+            print(row) # row is a tuple
+            # TODO: show results in table properly on UI
+    
+    def delete(self):
+        # TODO: get scan number from UI
+        Database.delete_result(self.db_path, 1)
 
     def scan(self):
         def get_nmap_directory():
