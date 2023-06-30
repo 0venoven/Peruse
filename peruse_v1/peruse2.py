@@ -1,24 +1,11 @@
 import os
 import subprocess
-from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import platform
 import sys
-import nmap
+from ScanThread import ScanThread
 
 from ui_peruse import Ui_Peruse
-
-class ScanThread(QThread):
-    scanFinished = Signal(dict)
-
-    def __init__(self, ip_range):
-        super().__init__()
-        self.ip_range = ip_range
-
-    def run(self):
-        nm = nmap.PortScanner()
-        scan_output = nm.scan(hosts=self.ip_range, arguments="")
-        self.scanFinished.emit(scan_output)
 
 class Peruse(QMainWindow, Ui_Peruse):
     def __init__(self, app):
