@@ -11,7 +11,6 @@ Scoring              ? (not rlly sure how to do scoring)
 Sending data         V (dk whether that's the kind of data we want)
 Data analytics       ???
 maybe extend the list of services beyond just SSH? (ivan said he can do it)
-automatically identify the ip range to scan instead of the user keying it in themselves e.g. 192.168.1.0/24
 
 e.g. of recommendations (based on pw cracked):
 (the below was taken from CSA's password checker: https://www.csa.gov.sg/Tips-Resource/Interactive-Tools/Password-Checker)
