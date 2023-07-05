@@ -1,14 +1,29 @@
 Login                X
-Captcha              ?
+Captcha              V (ivan finished it)
 Tutorial             V
 Auto detect networks around and capture IP addresses      ?
-Reporting            V (clean up + if can save or export do we even need this)
+Reporting            V (clean up output)
 - Recommendation       Dictionary/database for now?
-Save output          V (requires the use of either database or export function)
+Save output          V (yin kit is done with tentative db)
 Fingerprinting       X
-LinPEAS              ?
-Scoring              ?
+LinPEAS              ? (is a script for enumeration, part of it checks for password policies, not sure how to integrate it)
+Scoring              ? (not rlly sure how to do scoring)
 Sending data         V (dk whether that's the kind of data we want)
 Data analytics       ???
+maybe extend the list of services beyond just SSH? (ivan said he can do it)
+automatically identify the ip range to scan instead of the user keying it in themselves e.g. 192.168.1.0/24
 
-Try IOTInspector     V
+e.g. of recommendations (based on pw cracked):
+(the below was taken from CSA's password checker: https://www.csa.gov.sg/Tips-Resource/Interactive-Tools/Password-Checker)
+Common Password 100
+Your password is very commonly-used, try creating a passphrase from a memory unique to you.
+All Lower / ALL Upper
+Try a mix of uppercase and lowercase letters, numbers or symbols to make your password more random and difficult to guess.
+Too Short (if <12 chars)
+Your password is quite short, try a strong password of at least 12 characters.
+Just Letters
+Your password only contains letters. Adding numbers or symbols will make your password more secure.
+Just Numbers
+Your password only contains numbers. Adding letters or symbols will make your password more secure.
+Common Sequence (got this using !@#$%^&*() but not exactly sure whats the criteria for it) / Repeated Pattern
+Repeated characters or patterns can make your password more predictable, try creating a passphrase from a memory unique to you.

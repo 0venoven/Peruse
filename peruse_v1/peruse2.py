@@ -2,7 +2,7 @@ import os
 import subprocess
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import platform
-import sys
+# import sys
 from ScanThread import ScanThread
 from Database import Database
 
@@ -37,7 +37,7 @@ class Peruse(QMainWindow, Ui_Peruse):
     
     def save(self):
         # TODO: get values from UI
-        Database.insert_result(self.db_path, "yes", 1)
+        Database.insert_result(self.db_path, "x of y passwords cracked", 1) # where 1 is the final score
     
     def view_all(self):
         final = Database.get_results(self.db_path)
@@ -47,7 +47,7 @@ class Peruse(QMainWindow, Ui_Peruse):
     
     def delete(self):
         # TODO: get scan number from UI
-        Database.delete_result(self.db_path, 1)
+        Database.delete_result(self.db_path, 1) # where 1 is scan number
 
     def scan(self):
         def get_nmap_directory():
