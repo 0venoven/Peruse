@@ -5,6 +5,7 @@ import platform
 # import sys
 from ScanThread import ScanThread
 from Database import Database
+from IPRange import IPRange
 
 from ui_peruse import Ui_Peruse
 
@@ -25,6 +26,7 @@ class Peruse(QMainWindow, Ui_Peruse):
 
         self.scan_thread = None
         self.db_path = r"results.db"
+        self.os = platform.system()
 
     def quit(self):
         self.app.quit()
@@ -53,11 +55,12 @@ class Peruse(QMainWindow, Ui_Peruse):
         def get_nmap_directory():
             return r"C:\Program Files (x86)\Nmap"
 
-        ip_range = self.ip_range_line_edit.text()
+        # ip_range = self.ip_range_line_edit.text()
+        ip_range = IPRange.get_ip_range()
 
         nmap_dir = get_nmap_directory()
 
-        if platform.system() == 'Windows':
+        if self.os == 'Windows':
             os.environ['PATH'] = nmap_dir + ';' + os.environ['PATH']
         else:
             os.environ['PATH'] = nmap_dir + ':' + os.environ['PATH']
