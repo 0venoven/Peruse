@@ -28,6 +28,8 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.db_path = r"results.db"
         self.os = platform.system()
 
+        Database.main(self.db_path)
+
     def quit(self):
         self.app.quit()
 
@@ -56,7 +58,8 @@ class Peruse(QMainWindow, Ui_Peruse):
             return r"C:\Program Files (x86)\Nmap"
 
         # ip_range = self.ip_range_line_edit.text()
-        ip_range = IPRange.get_ip_range()
+        ip_obj = IPRange()
+        ip_range = ip_obj.get_ip_range()
 
         nmap_dir = get_nmap_directory()
 
