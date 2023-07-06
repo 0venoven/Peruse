@@ -3,10 +3,11 @@ import re
 import ipaddress
 
 class IPRange:
-    def __init__(self):
+    def __init__(self, os):
         self.network_output = None
         self.ip_address = None
         self.subnet_mask = None
+        self.os = os
 
     def get_network_details(self):
         try:

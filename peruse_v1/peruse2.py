@@ -58,7 +58,7 @@ class Peruse(QMainWindow, Ui_Peruse):
             return r"C:\Program Files (x86)\Nmap"
 
         # ip_range = self.ip_range_line_edit.text()
-        ip_obj = IPRange()
+        ip_obj = IPRange(self.os)
         ip_range = ip_obj.get_ip_range()
 
         nmap_dir = get_nmap_directory()
