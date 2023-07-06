@@ -26,3 +26,5 @@ Just Numbers
 Your password only contains numbers. Adding letters or symbols will make your password more secure.
 Common Sequence (got this using !@#$%^&*() but not exactly sure whats the criteria for it) / Repeated Pattern
 Repeated characters or patterns can make your password more predictable, try creating a passphrase from a memory unique to you.
+Reversed Word
+Reversed words are not as difficult to guess as you think, try creating a passphrase from a memory unique to you.
