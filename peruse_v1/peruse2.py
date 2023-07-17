@@ -57,7 +57,10 @@ class Peruse(QMainWindow, Ui_Peruse):
         def get_nmap_directory():
             return r"C:\Program Files (x86)\Nmap"
 
+        # Users to enter their own IP range
         # ip_range = self.ip_range_line_edit.text()
+
+        # Get IP range from user's OS, set to PATH environment variable automatically
         ip_obj = IPRange(self.os)
         ip_range = ip_obj.get_ip_range()
 
