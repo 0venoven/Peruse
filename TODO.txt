@@ -1,10 +1,17 @@
-Login                X
-Captcha              V (ivan finished it)
-Tutorial             V
+Login                   X
+Captcha                 V (ivan finished it)
+Tutorial                V
 Auto detect the user's IP range
-Reporting            V (clean up output)
-- Recommendation       Dictionary/database for now?
-Save output          V (yin kit is done with tentative db)
+Reporting               V (clean up output)
+- Recommendation        Dictionary/database for now?
+Save output             V (yin kit is done with tentative db)
+Fingerprinting          X
+LinPEAS                 ? (is a script for enumeration, part of it checks for password policies, not sure how to integrate it)
+Scoring                 ? (not rlly sure how to do scoring)
+Data collection         V (dk whether that's the kind of data we want)
+Data analytics          ???
+maybe extend the list of services beyond just SSH? (ivan said he can do it)
+Cancel scan button      ???
 
 Database format:
 
@@ -35,11 +42,3 @@ Database format:
     vulnerability_name
     service_id (foreign key referencing Service table)
     host_id (foreign key referencing Host table)
-
-Fingerprinting       X
-LinPEAS              ? (is a script for enumeration, part of it checks for password policies, not sure how to integrate it)
-Scoring              ? (not rlly sure how to do scoring)
-Sending data         V (dk whether that's the kind of data we want)
-Data analytics       ???
-maybe extend the list of services beyond just SSH? (ivan said he can do it)
-Cancel scan button   ???
