@@ -11,23 +11,39 @@ class IPRange:
 
     def get_network_details(self):
         try:
-            self.network_output = subprocess.check_output(['ipconfig', '/all']).decode('utf-8')
+            if self.os == "Windows":
+                self.network_output = subprocess.check_output(['ipconfig', '/all']).decode('utf-8')
+            elif self.os == "Darwin":
+                self.network_output = subprocess.check_output(['ifconfig', 'en0']).decode('utf-8')
         except subprocess.CalledProcessError:
             self.network_output = None
 
     def extract_ip_address(self):
-        ip_address_pattern = r'Wireless LAN adapter Wi-Fi.*?IPv4 Address.*?: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-        match = re.search(ip_address_pattern, self.network_output, re.DOTALL)
+        if self.os == "Windows":
+            ip_address_pattern = r'Wireless LAN adapter Wi-Fi.*?IPv4 Address.*?: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+            match = re.search(ip_address_pattern, self.network_output, re.DOTALL)
+        elif self.os == "Darwin":
+            ip_address_pattern = r'inet (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+            match = re.search(ip_address_pattern, self.network_output)
         if match:
             self.ip_address = match.group(1)
         else:
             self.ip_address = None
 
     def extract_subnet_mask(self):
-        subnet_mask_pattern = r'Wireless LAN adapter Wi-Fi.*?Subnet Mask.*?: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-        match = re.search(subnet_mask_pattern, self.network_output, re.DOTALL)
-        if match:
-            self.subnet_mask = match.group(1)
+        if self.os == "Windows":
+            subnet_mask_pattern = r'Wireless LAN adapter Wi-Fi.*?Subnet Mask.*?: (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+            match = re.search(subnet_mask_pattern, self.network_output, re.DOTALL)
+            if match:
+                self.subnet_mask = match.group(1)
+        elif self.os == "Darwin":
+            subnet_mask_pattern = r'netmask (0x[a-fA-F0-9]+)'
+            match = re.search(subnet_mask_pattern, self.network_output)
+            if match:
+                subnet_mask = match.group(1)
+                subnet_mask = int(subnet_mask, 16)
+                subnet_mask = str(ipaddress.ip_address(subnet_mask))
+                self.subnet_mask = subnet_mask
         else:
             self.subnet_mask = None
 

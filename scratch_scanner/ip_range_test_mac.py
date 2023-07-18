@@ -2,8 +2,6 @@ import subprocess
 import re
 import ipaddress
 
-# i have yet to test this on mac as of 6/7/23
-
 def get_ifconfig_output():
     try:
         ifconfig_output = subprocess.check_output(['ifconfig', 'en0']).decode('utf-8')
