@@ -7,7 +7,7 @@ from ScanThread import ScanThread
 from Database import Database
 from IPRange import IPRange
 
-from ui_peruse import Ui_Peruse
+from ui_peruse_2 import Ui_Peruse
 
 class Peruse(QMainWindow, Ui_Peruse):
     def __init__(self, app):
@@ -21,12 +21,18 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.actionFilter.triggered.connect(self.filter)
         self.actionAbout.triggered.connect(self.about)
         self.actionAbout_QT.triggered.connect(self.aboutQt)
-        self.ip_range_line_edit.returnPressed.connect(self.scan)
+        self.ip_range_lineEdit.returnPressed.connect(self.scan)
         self.scan_button.clicked.connect(self.scan)
 
         self.scan_thread = None
         self.db_path = r"results.db"
         self.os = platform.system()
+
+        # Get IP range from user's OS, set to PATH environment variable automatically
+        ip_obj = IPRange(self.os)
+        ip_range = ip_obj.get_ip_range()
+
+        self.ip_range_lineEdit.setText(ip_range)
 
         Database.main(self.db_path)
 
@@ -58,11 +64,7 @@ class Peruse(QMainWindow, Ui_Peruse):
             return r"C:\Program Files (x86)\Nmap"
 
         # Users to enter their own IP range
-        # ip_range = self.ip_range_line_edit.text()
-
-        # Get IP range from user's OS, set to PATH environment variable automatically
-        ip_obj = IPRange(self.os)
-        ip_range = ip_obj.get_ip_range()
+        ip_range = self.ip_range_lineEdit.text()
 
         nmap_dir = get_nmap_directory()
 
@@ -74,10 +76,14 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.scan_output_text_browser.clear()
         self.scan_output_text_browser.append(f"Scanning {ip_range}...")
 
+        if ip_range is None:
+            self.scan_output_text_browser.append(f"No IP range detected. Please make sure you are connected to the network.")
+
         # Create and start the scanning thread
-        self.scan_thread = ScanThread(ip_range)
-        self.scan_thread.scanFinished.connect(self.process_scan_results)
-        self.scan_thread.start()
+        else:
+            self.scan_thread = ScanThread(ip_range)
+            self.scan_thread.scanFinished.connect(self.process_scan_results)
+            self.scan_thread.start()
 
     def process_scan_results(self, scan_output):
         for host, result in scan_output['scan'].items():
