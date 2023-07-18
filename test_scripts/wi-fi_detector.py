@@ -1,3 +1,26 @@
+import pywifi
+from pywifi import const
+
+def get_connected_ssid():
+    wifi = pywifi.PyWiFi()
+    iface = wifi.interfaces()[0]
+    iface.scan()
+    ssid = None
+    connected_wifi = iface.status()
+    if connected_wifi == const.IFACE_CONNECTED:
+        profiles = iface.network_profiles()
+        for profile in profiles:
+            if profile.ssid != "":
+                ssid = profile.ssid
+                break
+    return ssid
+
+# Call the function to get the connected SSID
+connected_ssid = get_connected_ssid()
+print("Connected SSID:", connected_ssid)
+
+##############################################################################################################################################################
+
 # This script is used to detect the available Wi-Fi networks and prompt the user to choose a Wi-Fi network to scan.
 # It does not actually perform the scan itself however.
 # It is not always reliable as it relies on the output of a subprocess.
@@ -53,28 +76,5 @@
 #     print("\nSelected Wi-Fi Network:", selected_wifi_network)
 # else:
 #     print("No Wi-Fi networks found.")
-
-####################################################################################################################################################################
-
-import pywifi
-from pywifi import const
-
-def get_connected_ssid():
-    wifi = pywifi.PyWiFi()
-    iface = wifi.interfaces()[0]
-    iface.scan()
-    ssid = None
-    connected_wifi = iface.status()
-    if connected_wifi == const.IFACE_CONNECTED:
-        profiles = iface.network_profiles()
-        for profile in profiles:
-            if profile.ssid != "":
-                ssid = profile.ssid
-                break
-    return ssid
-
-# Call the function to get the connected SSID
-connected_ssid = get_connected_ssid()
-print("Connected SSID:", connected_ssid)
 
 

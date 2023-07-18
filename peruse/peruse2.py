@@ -6,6 +6,8 @@ import platform
 from ScanThread import ScanThread
 from Database import Database
 from IPRange import IPRange
+import pywifi
+from pywifi import const
 
 from ui_peruse_2 import Ui_Peruse
 
@@ -21,17 +23,22 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.actionFilter.triggered.connect(self.filter)
         self.actionAbout.triggered.connect(self.about)
         self.actionAbout_QT.triggered.connect(self.aboutQt)
-        self.ip_range_lineEdit.returnPressed.connect(self.scan)
         self.scan_button.clicked.connect(self.scan)
 
         self.scan_thread = None
         self.db_path = r"results.db"
         self.os = platform.system()
+        self.ssid = None
+
+        # Call the function to get the connected SSID
+        connected_ssid = self.get_connected_ssid()
 
         # Get IP range from user's OS, set to PATH environment variable automatically
         ip_obj = IPRange(self.os)
         ip_range = ip_obj.get_ip_range()
 
+        self.current_network_lineEdit.setText(connected_ssid)           # REPLACE WITH CONNECTED SSID after fixing it
+        print("Connected SSID:", connected_ssid)
         self.ip_range_lineEdit.setText(ip_range)
 
         Database.main(self.db_path)
@@ -58,6 +65,18 @@ class Peruse(QMainWindow, Ui_Peruse):
     def delete(self):
         # TODO: get scan number from UI
         Database.delete_result(self.db_path, 1) # where 1 is scan number
+
+    def get_connected_ssid(self):
+        wifi = pywifi.PyWiFi()
+        iface = wifi.interfaces()[0]
+        iface.scan()
+        connected_wifi = iface.status()
+        if connected_wifi == const.IFACE_CONNECTED:
+            profiles = iface.network_profiles()
+            for profile in profiles:
+                if profile.ssid != "":
+                    self.ssid = profile.ssid
+                    break
 
     def scan(self):
         def get_nmap_directory():
