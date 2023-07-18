@@ -376,7 +376,7 @@ class Ui_Peruse(object):
         self.scan_button.setText(QCoreApplication.translate("Peruse", u"Scan", None))
         self.ip_range_label.setText(QCoreApplication.translate("Peruse", u"IP range:", None))
         self.cancel_button.setText(QCoreApplication.translate("Peruse", u"Cancel", None))
-        self.network_tip_label.setText(QCoreApplication.translate("Peruse", u"If this is not a network that you own/want to scan, please change to the desired network. Also, as dictionary attacks are used, please take note that it could potentially lock up your devices or cause other forms of harm.", None))
+        self.network_tip_label.setText(QCoreApplication.translate("Peruse", u"If this is not a network that you own/want to scan, please change to the desired network. Also, as dictionary attacks (multiple login attempts) are used, please take note that it could potentially lock up your devices or cause other forms of harm.", None))
         self.search_title_label.setText(QCoreApplication.translate("Peruse", u"Search a scan", None))
         self.radioButton.setText(QCoreApplication.translate("Peruse", u"Password cracked", None))
         self.radioButton_3.setText(QCoreApplication.translate("Peruse", u"NA", None))
