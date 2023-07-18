@@ -30,6 +30,10 @@ def extract_subnet_mask(ifconfig_output):
     else:
         return None
 
+def get_ip_range(ip_address, subnet_mask):
+    network = ipaddress.IPv4Network(f"{ip_address}/{subnet_mask}", strict=False)
+    return str(network.network_address) + "/" + str(network.prefixlen)
+
 # Usage
 ifconfig_output = get_ifconfig_output()
 
@@ -40,7 +44,8 @@ if ifconfig_output:
     if ip_address and subnet_mask:
         print(f"IP Address: {ip_address}")
         print(f"Subnet Mask: {subnet_mask}")
-        print("IP Range:" + ipaddress.ip_interface(f"{ip_address}/{subnet_mask}").network)
+        ip_range = get_ip_range(ip_address, subnet_mask)
+        print("IP Range:", ip_range)
     else:
         print("Unable to retrieve IP address and subnet mask.")
 else:
