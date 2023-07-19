@@ -25,6 +25,9 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
+        # Keep track of open ServicesWindows
+        self.services_windows = []
+
     def add_sample_data(self):
         # This is just an example to populate the table widget, you'll replace this with data from your SQLite DB.
         scan_data = [
@@ -48,12 +51,12 @@ class MainWindow(QMainWindow):
         menu.exec(event.globalPos())
 
     def show_host_info(self, scan_id):
-        self.host_info_window = HostInfoWindow(scan_id)
+        self.host_info_window = HostInfoWindow(scan_id, parent=self)
         self.host_info_window.show()
 
 class HostInfoWindow(QMainWindow):
-    def __init__(self, scan_id):
-        super().__init__()
+    def __init__(self, scan_id, parent=None):
+        super().__init__(parent)
         self.setWindowTitle("Host Information")
         self.setGeometry(200, 200, 600, 400)
 
@@ -97,12 +100,21 @@ class HostInfoWindow(QMainWindow):
         menu.exec(event.globalPos())
 
     def show_services_info(self, host_id):
-        self.services_window = ServicesWindow(host_id)
-        self.services_window.show()
+        # Check if the services_window already exists for the selected host
+        for services_window in self.parent().services_windows:
+            if services_window.host_id == host_id:
+                services_window.show()
+                services_window.activateWindow()
+                break
+        else:
+            services_window = ServicesWindow(host_id, parent=self.parent())
+            self.parent().services_windows.append(services_window)
+            services_window.show()
 
 class ServicesWindow(QMainWindow):
-    def __init__(self, host_id):
-        super().__init__()
+    def __init__(self, host_id, parent=None):
+        super().__init__(parent)
+        self.host_id = host_id
         self.setWindowTitle("Services Information")
         self.setGeometry(300, 300, 500, 300)
 
