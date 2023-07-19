@@ -28,7 +28,6 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.scan_thread = None
         self.db_path = r"results.db"
         self.os = platform.system()
-        self.ssid = None
 
         # Call the function to get the connected SSID
         connected_ssid = self.get_connected_ssid()
@@ -67,16 +66,20 @@ class Peruse(QMainWindow, Ui_Peruse):
         Database.delete_result(self.db_path, 1) # where 1 is scan number
 
     def get_connected_ssid(self):
-        wifi = pywifi.PyWiFi()
-        iface = wifi.interfaces()[0]
-        iface.scan()
-        connected_wifi = iface.status()
-        if connected_wifi == const.IFACE_CONNECTED:
-            profiles = iface.network_profiles()
-            for profile in profiles:
-                if profile.ssid != "":
-                    self.ssid = profile.ssid
+        try:
+            output = subprocess.check_output(["netsh", "wlan", "show", "interface"])
+            output = output.decode("utf-8").replace("\r","")
+            lines = output.split("\n")
+            ssid = None
+
+            for line in lines:
+                if "SSID" in line:
+                    ssid = line.split(":")[1].strip()
                     break
+
+            return ssid
+        except subprocess.CalledProcessError:
+            return None
 
     def scan(self):
         def get_nmap_directory():

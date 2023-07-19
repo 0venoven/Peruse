@@ -1,23 +1,46 @@
-import pywifi
-from pywifi import const
+import subprocess
 
 def get_connected_ssid():
-    wifi = pywifi.PyWiFi()
-    iface = wifi.interfaces()[0]
-    iface.scan()
-    ssid = None
-    connected_wifi = iface.status()
-    if connected_wifi == const.IFACE_CONNECTED:
-        profiles = iface.network_profiles()
-        for profile in profiles:
-            if profile.ssid != "":
-                ssid = profile.ssid
+    try:
+        output = subprocess.check_output(["netsh", "wlan", "show", "interface"])
+        output = output.decode("utf-8").replace("\r","")
+        lines = output.split("\n")
+        ssid = None
+
+        for line in lines:
+            if "SSID" in line:
+                ssid = line.split(":")[1].strip()
                 break
-    return ssid
+
+        return ssid
+    except subprocess.CalledProcessError:
+        return None
 
 # Call the function to get the connected SSID
 connected_ssid = get_connected_ssid()
 print("Connected SSID:", connected_ssid)
+
+
+# import pywifi
+# from pywifi import const
+
+# def get_connected_ssid():
+#     wifi = pywifi.PyWiFi()
+#     iface = wifi.interfaces()[0]
+#     iface.scan()
+#     ssid = None
+#     connected_wifi = iface.status()
+#     if connected_wifi == const.IFACE_CONNECTED:
+#         profiles = iface.network_profiles()
+#         for profile in profiles:
+#             if profile.ssid != "":
+#                 ssid = profile.ssid
+#                 break
+#     return ssid
+
+# # Call the function to get the connected SSID
+# connected_ssid = get_connected_ssid()
+# print("Connected SSID:", connected_ssid)
 
 ##############################################################################################################################################################
 
