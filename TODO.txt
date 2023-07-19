@@ -1,10 +1,8 @@
 Login                   X
-Captcha                 V (ivan finished it)
 Tutorial                V
-Auto detect the user's IP range
 Reporting               V (clean up output)
 - Recommendation        Dictionary/database for now?
-Save output             V (yin kit is done with tentative db)
+Save output             V (integrate db with app)
 Fingerprinting          X
 LinPEAS                 ? (is a script for enumeration, part of it checks for password policies, not sure how to integrate it)
 Scoring                 ? (not rlly sure how to do scoring)
@@ -12,33 +10,3 @@ Data collection         V (dk whether that's the kind of data we want)
 Data analytics          ???
 maybe extend the list of services beyond just SSH? (ivan said he can do it)
 Cancel scan button      ???
-
-Database format:
-
-    Scan table:
-
-    scan_id (primary key)
-    scan_date
-    total_hosts
-    total_vulnerabilities
-
-    Host table:
-
-    host_id (primary key)
-    host_ip
-    scan_id (foreign key referencing Scan table)
-    num_vulnerabilities
-
-    Service table:
-
-    service_id (primary key)
-    service_name
-    pw_cracked
-
-    # don't use this first
-    Vulnerability table:
-
-    vulnerability_id (primary key)
-    vulnerability_name
-    service_id (foreign key referencing Service table)
-    host_id (foreign key referencing Host table)
