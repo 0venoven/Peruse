@@ -119,6 +119,7 @@ class Database():
             conn.commit()
             # delete all hosts with scan_id
             cur.execute("DELETE FROM host WHERE scan_id = ?", [scan_id])
+            # delete scan with scan_id
             cur.execute("DELETE FROM scan WHERE scan_id = ?", [scan_id])
             conn.commit()
         except Error as e:
