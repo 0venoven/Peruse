@@ -79,6 +79,8 @@ class Database():
             print(e)
 
     def insert_scan(db_path, network_name):
+        # prob nd to edit this fn later
+        # maybe accept more params (those that are placeholders for now)
         conn = Database.create_connection(db_path)
         try:
             cur = conn.cursor()

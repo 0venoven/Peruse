@@ -2,12 +2,9 @@ import os
 import subprocess
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import platform
-# import sys
 from ScanThread import ScanThread
 from Database import Database
 from IPRange import IPRange
-import pywifi
-from pywifi import const
 
 from ui_peruse_2 import Ui_Peruse
 
@@ -52,18 +49,18 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.app.quit()  # TODO: Replace with filter function
     
     def save(self):
-        # TODO: get values from UI
-        Database.insert_result(self.db_path, "x of y passwords cracked", 1) # where 1 is the final score
+        # TODO: edit this fn to get the necessary data from UI
+        Database.insert_scan(self.db_path, self.current_network_lineEdit.text())
     
     def view_all(self):
-        final = Database.get_results(self.db_path)
+        final = Database.get_all_scans(self.db_path)
         for row in final:
             print(row) # row is a tuple
             # TODO: show results in table properly on UI
     
     def delete(self):
         # TODO: get scan number from UI
-        Database.delete_result(self.db_path, 1) # where 1 is scan number
+        Database.delete_result(self.db_path, 1) # where 1 is scan id
 
     def get_connected_ssid(self):
         try:
