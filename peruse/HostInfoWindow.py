@@ -1,4 +1,5 @@
-from PySide6.QtWidgets import QMainWindow, QTableWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QMainWindow, QTableWidget, QVBoxLayout, QWidget, QMenu, QTableWidgetItem
+from ServicesWindow import ServicesWindow
 
 class HostInfoWindow(QMainWindow):
     def __init__(self, scan_id, parent=None):
