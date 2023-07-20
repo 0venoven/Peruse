@@ -6,6 +6,7 @@ from ScanThread import ScanThread
 from Database import Database
 from IPRange import IPRange
 from HostInfoWindow import HostInfoWindow
+from ScanConfirmWindow import ScanConfirmWindow
 
 from ui_peruse_2 import Ui_Peruse
 
@@ -21,7 +22,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.actionFilter.triggered.connect(self.filter)
         self.actionAbout.triggered.connect(self.about)
         self.actionAbout_QT.triggered.connect(self.aboutQt)
-        self.scan_button.clicked.connect(self.scan)
+        self.scan_button.clicked.connect(self.scan_confirm)
 
         # Insert the data into the TableWidget here
         # self.save_button.clicked.connect(self.save)?
@@ -47,7 +48,6 @@ class Peruse(QMainWindow, Ui_Peruse):
         ip_range = ip_obj.get_ip_range()
 
         self.current_network_lineEdit.setText(connected_ssid)
-        print("Connected SSID:", connected_ssid)
         self.ip_range_lineEdit.setText(ip_range)
 
         Database.main(self.db_path)
@@ -85,6 +85,12 @@ class Peruse(QMainWindow, Ui_Peruse):
             menu.addAction("View Host Information", lambda: self.show_host_info(scan_id))
 
         menu.exec(event.globalPos())
+
+    def scan_confirm(self):
+        self.scan_confirm_window = ScanConfirmWindow()
+        self.scan_confirm_window.confirmed.connect(self.scan)
+        self.scan_confirm_window.canceled.connect(self.scan_confirm_window.close)
+        self.scan_confirm_window.show()
 
     def show_host_info(self, scan_id):
         self.host_info_window = HostInfoWindow(scan_id, parent=self)
@@ -130,6 +136,7 @@ class Peruse(QMainWindow, Ui_Peruse):
             return None
 
     def scan(self):
+
         def get_nmap_directory():
             return r"C:\Program Files (x86)\Nmap"
 

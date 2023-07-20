@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QLabel, QVBoxLayout, QPushButton, QWidget, QLineEdit, QMessageBox
-from PySide6.QtGui import QPixmap, QKeyEvent
+from PySide6.QtWidgets import QApplication, QDialog, QLabel, QVBoxLayout, QPushButton, QLineEdit, QMessageBox
+from PySide6.QtGui import QPixmap
 from captcha.image import ImageCaptcha
 import string
 import random
@@ -13,7 +13,7 @@ from peruse2 import Peruse  # Import the Peruse class from peruse2.py
 class CaptchaWindow(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Captcha Window")
+        self.setWindowTitle("Captcha Verification")
 
         self.attempts = 0  # Counter for the number of attempts
         self.captcha_checked = False  # Flag to track whether captcha check has been performed

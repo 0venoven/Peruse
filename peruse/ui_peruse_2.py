@@ -92,89 +92,11 @@ class Ui_Peruse(object):
         self.scans_tableWidget.verticalHeader().setStretchLastSection(False)
         self.layoutWidget1 = QWidget(self.centralwidget)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(20, 20, 921, 271))
-        self.verticalLayout_3 = QVBoxLayout(self.layoutWidget1)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.scan_title_label = QLabel(self.layoutWidget1)
-        self.scan_title_label.setObjectName(u"scan_title_label")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.scan_title_label.sizePolicy().hasHeightForWidth())
-        self.scan_title_label.setSizePolicy(sizePolicy1)
-        self.scan_title_label.setAlignment(Qt.AlignCenter)
-
-        self.verticalLayout_3.addWidget(self.scan_title_label)
-
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.current_network_label = QLabel(self.layoutWidget1)
-        self.current_network_label.setObjectName(u"current_network_label")
-        sizePolicy.setHeightForWidth(self.current_network_label.sizePolicy().hasHeightForWidth())
-        self.current_network_label.setSizePolicy(sizePolicy)
-
-        self.horizontalLayout.addWidget(self.current_network_label)
-
-        self.current_network_lineEdit = QLineEdit(self.layoutWidget1)
-        self.current_network_lineEdit.setObjectName(u"current_network_lineEdit")
-        self.current_network_lineEdit.setReadOnly(False)
-
-        self.horizontalLayout.addWidget(self.current_network_lineEdit)
-
-        self.scan_button = QPushButton(self.layoutWidget1)
-        self.scan_button.setObjectName(u"scan_button")
-
-        self.horizontalLayout.addWidget(self.scan_button)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout)
-
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.ip_range_label = QLabel(self.layoutWidget1)
-        self.ip_range_label.setObjectName(u"ip_range_label")
-
-        self.horizontalLayout_2.addWidget(self.ip_range_label)
-
-        self.ip_range_lineEdit = QLineEdit(self.layoutWidget1)
-        self.ip_range_lineEdit.setObjectName(u"ip_range_lineEdit")
-        self.ip_range_lineEdit.setReadOnly(False)
-
-        self.horizontalLayout_2.addWidget(self.ip_range_lineEdit)
-
-        self.cancel_button = QPushButton(self.layoutWidget1)
-        self.cancel_button.setObjectName(u"cancel_button")
-
-        self.horizontalLayout_2.addWidget(self.cancel_button)
-
-
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
-
-        self.network_tip_label = QLabel(self.layoutWidget1)
-        self.network_tip_label.setObjectName(u"network_tip_label")
-        sizePolicy2 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.network_tip_label.sizePolicy().hasHeightForWidth())
-        self.network_tip_label.setSizePolicy(sizePolicy2)
-        self.network_tip_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
-        self.network_tip_label.setWordWrap(True)
-
-        self.verticalLayout.addWidget(self.network_tip_label)
-
-
-        self.verticalLayout_3.addLayout(self.verticalLayout)
-
-        self.layoutWidget2 = QWidget(self.centralwidget)
-        self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.layoutWidget2.setGeometry(QRect(1000, 20, 891, 271))
-        self.verticalLayout_4 = QVBoxLayout(self.layoutWidget2)
+        self.layoutWidget1.setGeometry(QRect(1000, 20, 891, 271))
+        self.verticalLayout_4 = QVBoxLayout(self.layoutWidget1)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.search_title_label = QLabel(self.layoutWidget2)
+        self.search_title_label = QLabel(self.layoutWidget1)
         self.search_title_label.setObjectName(u"search_title_label")
         self.search_title_label.setAlignment(Qt.AlignCenter)
 
@@ -182,43 +104,116 @@ class Ui_Peruse(object):
 
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.radioButton = QRadioButton(self.layoutWidget2)
+        self.radioButton = QRadioButton(self.layoutWidget1)
         self.radioButton.setObjectName(u"radioButton")
 
         self.gridLayout.addWidget(self.radioButton, 1, 0, 1, 1)
 
-        self.radioButton_3 = QRadioButton(self.layoutWidget2)
+        self.radioButton_3 = QRadioButton(self.layoutWidget1)
         self.radioButton_3.setObjectName(u"radioButton_3")
 
         self.gridLayout.addWidget(self.radioButton_3, 3, 0, 1, 1)
 
-        self.radioButton_2 = QRadioButton(self.layoutWidget2)
+        self.radioButton_2 = QRadioButton(self.layoutWidget1)
         self.radioButton_2.setObjectName(u"radioButton_2")
 
         self.gridLayout.addWidget(self.radioButton_2, 2, 0, 1, 1)
 
-        self.search_textEdit = QTextEdit(self.layoutWidget2)
+        self.search_textEdit = QTextEdit(self.layoutWidget1)
         self.search_textEdit.setObjectName(u"search_textEdit")
 
         self.gridLayout.addWidget(self.search_textEdit, 0, 0, 1, 2)
 
-        self.view_all_button = QPushButton(self.layoutWidget2)
+        self.view_all_button = QPushButton(self.layoutWidget1)
         self.view_all_button.setObjectName(u"view_all_button")
 
         self.gridLayout.addWidget(self.view_all_button, 2, 1, 1, 1)
 
-        self.search_button = QPushButton(self.layoutWidget2)
+        self.search_button = QPushButton(self.layoutWidget1)
         self.search_button.setObjectName(u"search_button")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.search_button.sizePolicy().hasHeightForWidth())
-        self.search_button.setSizePolicy(sizePolicy3)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.search_button.sizePolicy().hasHeightForWidth())
+        self.search_button.setSizePolicy(sizePolicy1)
 
         self.gridLayout.addWidget(self.search_button, 1, 1, 1, 1)
 
 
         self.verticalLayout_4.addLayout(self.gridLayout)
+
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(21, 21, 921, 271))
+        self.verticalLayout = QVBoxLayout(self.widget)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.scan_title_label = QLabel(self.widget)
+        self.scan_title_label.setObjectName(u"scan_title_label")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.scan_title_label.sizePolicy().hasHeightForWidth())
+        self.scan_title_label.setSizePolicy(sizePolicy2)
+        self.scan_title_label.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout.addWidget(self.scan_title_label)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.gridLayout_2 = QGridLayout()
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.current_network_label = QLabel(self.widget)
+        self.current_network_label.setObjectName(u"current_network_label")
+        sizePolicy.setHeightForWidth(self.current_network_label.sizePolicy().hasHeightForWidth())
+        self.current_network_label.setSizePolicy(sizePolicy)
+
+        self.gridLayout_2.addWidget(self.current_network_label, 0, 0, 1, 2)
+
+        self.current_network_lineEdit = QLineEdit(self.widget)
+        self.current_network_lineEdit.setObjectName(u"current_network_lineEdit")
+        self.current_network_lineEdit.setReadOnly(False)
+
+        self.gridLayout_2.addWidget(self.current_network_lineEdit, 0, 2, 1, 1)
+
+        self.ip_range_label = QLabel(self.widget)
+        self.ip_range_label.setObjectName(u"ip_range_label")
+
+        self.gridLayout_2.addWidget(self.ip_range_label, 1, 0, 1, 1)
+
+        self.ip_range_lineEdit = QLineEdit(self.widget)
+        self.ip_range_lineEdit.setObjectName(u"ip_range_lineEdit")
+        self.ip_range_lineEdit.setReadOnly(False)
+
+        self.gridLayout_2.addWidget(self.ip_range_lineEdit, 1, 1, 1, 2)
+
+
+        self.horizontalLayout.addLayout(self.gridLayout_2)
+
+        self.scan_button = QPushButton(self.widget)
+        self.scan_button.setObjectName(u"scan_button")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Ignored)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.scan_button.sizePolicy().hasHeightForWidth())
+        self.scan_button.setSizePolicy(sizePolicy3)
+
+        self.horizontalLayout.addWidget(self.scan_button)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
+
+        self.network_tip_label = QLabel(self.widget)
+        self.network_tip_label.setObjectName(u"network_tip_label")
+        sizePolicy4 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.network_tip_label.sizePolicy().hasHeightForWidth())
+        self.network_tip_label.setSizePolicy(sizePolicy4)
+        self.network_tip_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.network_tip_label.setWordWrap(True)
+
+        self.verticalLayout.addWidget(self.network_tip_label)
 
         Peruse.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(Peruse)
@@ -259,12 +254,6 @@ class Ui_Peruse(object):
         self.scan_output_label.setText(QCoreApplication.translate("Peruse", u"Scan Output :", None))
         self.save_button.setText(QCoreApplication.translate("Peruse", u"Save", None))
         self.delete_button.setText(QCoreApplication.translate("Peruse", u"Delete", None))
-        self.scan_title_label.setText(QCoreApplication.translate("Peruse", u"Scan a network", None))
-        self.current_network_label.setText(QCoreApplication.translate("Peruse", u"Current network:", None))
-        self.scan_button.setText(QCoreApplication.translate("Peruse", u"Scan", None))
-        self.ip_range_label.setText(QCoreApplication.translate("Peruse", u"IP range:", None))
-        self.cancel_button.setText(QCoreApplication.translate("Peruse", u"Cancel", None))
-        self.network_tip_label.setText(QCoreApplication.translate("Peruse", u"If this is not a network that you own/want to scan, please change to the desired network. Also, as dictionary attacks (multiple login attempts) are used, please take note that it could potentially lock up your devices or cause other forms of harm.", None))
         self.search_title_label.setText(QCoreApplication.translate("Peruse", u"Search a scan", None))
         self.radioButton.setText(QCoreApplication.translate("Peruse", u"Password cracked", None))
         self.radioButton_3.setText(QCoreApplication.translate("Peruse", u"NA", None))
@@ -280,6 +269,11 @@ class Ui_Peruse(object):
         self.search_textEdit.setPlaceholderText(QCoreApplication.translate("Peruse", u"Enter search string here", None))
         self.view_all_button.setText(QCoreApplication.translate("Peruse", u"View All", None))
         self.search_button.setText(QCoreApplication.translate("Peruse", u"Search", None))
+        self.scan_title_label.setText(QCoreApplication.translate("Peruse", u"Scan a network", None))
+        self.current_network_label.setText(QCoreApplication.translate("Peruse", u"Current network:", None))
+        self.ip_range_label.setText(QCoreApplication.translate("Peruse", u"IP range:", None))
+        self.scan_button.setText(QCoreApplication.translate("Peruse", u"Scan", None))
+        self.network_tip_label.setText(QCoreApplication.translate("Peruse", u"If this is not a network that you own/want to scan, please change to the desired network. Also, as dictionary attacks (multiple login attempts) are used, please take note that it could potentially lock up your devices or cause other forms of harm.", None))
         self.menuScan.setTitle(QCoreApplication.translate("Peruse", u"Scan", None))
         self.menuTools.setTitle(QCoreApplication.translate("Peruse", u"Tools", None))
         self.menuHelp.setTitle(QCoreApplication.translate("Peruse", u"Help", None))
