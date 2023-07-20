@@ -101,7 +101,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="scans_tableWidget">
     <property name="geometry">
      <rect>
       <x>1000</x>
@@ -127,139 +127,9 @@
     <attribute name="verticalHeaderStretchLastSection">
      <bool>false</bool>
     </attribute>
-    <row>
-     <property name="text">
-      <string>New Row</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>1</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>2</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>3</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>4</string>
-     </property>
-    </row>
     <row/>
-    <column>
-     <property name="text">
-      <string>scan_id</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>scan_datetime</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>network_name</string>
-     </property>
-    </column>
-    <item row="0" column="0">
-     <property name="text">
-      <string>adalkakmalknlaknvlaknvlakvnk</string>
-     </property>
-    </item>
-    <item row="0" column="1">
-     <property name="text">
-      <string>a</string>
-     </property>
-    </item>
-    <item row="0" column="2">
-     <property name="text">
-      <string>a</string>
-     </property>
-    </item>
-    <item row="1" column="0">
-     <property name="text">
-      <string>b</string>
-     </property>
-    </item>
-    <item row="1" column="1">
-     <property name="text">
-      <string>b</string>
-     </property>
-    </item>
-    <item row="1" column="2">
-     <property name="text">
-      <string>b</string>
-     </property>
-    </item>
-    <item row="2" column="0">
-     <property name="text">
-      <string>c</string>
-     </property>
-    </item>
-    <item row="2" column="1">
-     <property name="text">
-      <string>c</string>
-     </property>
-    </item>
-    <item row="2" column="2">
-     <property name="text">
-      <string>c</string>
-     </property>
-    </item>
-    <item row="3" column="0">
-     <property name="text">
-      <string>d</string>
-     </property>
-    </item>
-    <item row="3" column="1">
-     <property name="text">
-      <string>d</string>
-     </property>
-    </item>
-    <item row="3" column="2">
-     <property name="text">
-      <string>d</string>
-     </property>
-    </item>
-    <item row="4" column="0">
-     <property name="text">
-      <string>e</string>
-     </property>
-    </item>
-    <item row="4" column="1">
-     <property name="text">
-      <string>e</string>
-     </property>
-    </item>
-    <item row="4" column="2">
-     <property name="text">
-      <string>e</string>
-     </property>
-    </item>
-    <item row="5" column="0">
-     <property name="text">
-      <string>f</string>
-     </property>
-    </item>
-    <item row="5" column="1">
-     <property name="text">
-      <string>f</string>
-     </property>
-    </item>
-    <item row="5" column="2">
-     <property name="text">
-      <string>f</string>
-     </property>
-    </item>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -366,7 +236,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>1000</x>
@@ -410,7 +280,7 @@
         </widget>
        </item>
        <item row="0" column="0" colspan="2">
-        <widget class="QTextEdit" name="textEdit">
+        <widget class="QTextEdit" name="search_textEdit">
          <property name="html">
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;

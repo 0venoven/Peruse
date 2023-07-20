@@ -1,6 +1,6 @@
 import os
 import subprocess
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem, QTableWidget
 import platform
 from ScanThread import ScanThread
 from Database import Database
@@ -22,6 +22,15 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.actionAbout_QT.triggered.connect(self.aboutQt)
         self.scan_button.clicked.connect(self.scan)
 
+        # Insert the data into the TableWidget here
+        # self.save_button.clicked.connect(self.save)?
+        # self.view_all_button.clicked.connect(self.view_all)?
+        # self.delete_button.clicked.connect(self.delete)?
+        # Take from db
+
+        # add in the sample testing data
+        self.add_sample_data()
+
         self.scan_thread = None
         self.db_path = r"results.db"
         self.os = platform.system()
@@ -38,6 +47,29 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.ip_range_lineEdit.setText(ip_range)
 
         Database.main(self.db_path)
+
+    # REMOVE THIS AFTER THE INTEGRATION WITH DATABASE IS DONE
+    def add_sample_data(self):
+
+        # Configure the table widget
+        self.scans_tableWidget.setColumnCount(2)
+        self.scans_tableWidget.setHorizontalHeaderLabels(["Scan ID", "Scan Result"])
+
+        # Disable editing
+        self.scans_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+
+        # Add sample data (you will replace this with data from your SQLite DB)
+        scan_data = [
+            (1, "Vulnerable"),
+            (2, "Clean"),
+            (3, "Vulnerable"),
+        ]
+
+        # Insert the data into the TableWidget
+        for row, (scan_id, scan_result) in enumerate(scan_data):
+            self.scans_tableWidget.insertRow(row)
+            self.scans_tableWidget.setItem(row, 0, QTableWidgetItem(str(scan_id)))
+            self.scans_tableWidget.setItem(row, 1, QTableWidgetItem(scan_result))
 
     def quit(self):
         self.app.quit()
@@ -101,6 +133,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         # Create and start the scanning thread
         else:
             self.scan_thread = ScanThread(ip_range)
+            # self.cancel_button.clicked.connect(self.scan_thread.cancel)
             self.scan_thread.scanFinished.connect(self.process_scan_results)
             self.scan_thread.start()
 

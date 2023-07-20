@@ -79,79 +79,25 @@ class Ui_Peruse(object):
 
         self.verticalLayout_2.addWidget(self.delete_button)
 
-        self.tableWidget = QTableWidget(self.centralwidget)
-        if (self.tableWidget.columnCount() < 3):
-            self.tableWidget.setColumnCount(3)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        if (self.tableWidget.rowCount() < 6):
-            self.tableWidget.setRowCount(6)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(0, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(1, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(2, __qtablewidgetitem5)
-        __qtablewidgetitem6 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(3, __qtablewidgetitem6)
-        __qtablewidgetitem7 = QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        self.tableWidget.setItem(0, 0, __qtablewidgetitem8)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        self.tableWidget.setItem(0, 1, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        self.tableWidget.setItem(0, 2, __qtablewidgetitem10)
-        __qtablewidgetitem11 = QTableWidgetItem()
-        self.tableWidget.setItem(1, 0, __qtablewidgetitem11)
-        __qtablewidgetitem12 = QTableWidgetItem()
-        self.tableWidget.setItem(1, 1, __qtablewidgetitem12)
-        __qtablewidgetitem13 = QTableWidgetItem()
-        self.tableWidget.setItem(1, 2, __qtablewidgetitem13)
-        __qtablewidgetitem14 = QTableWidgetItem()
-        self.tableWidget.setItem(2, 0, __qtablewidgetitem14)
-        __qtablewidgetitem15 = QTableWidgetItem()
-        self.tableWidget.setItem(2, 1, __qtablewidgetitem15)
-        __qtablewidgetitem16 = QTableWidgetItem()
-        self.tableWidget.setItem(2, 2, __qtablewidgetitem16)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        self.tableWidget.setItem(3, 0, __qtablewidgetitem17)
-        __qtablewidgetitem18 = QTableWidgetItem()
-        self.tableWidget.setItem(3, 1, __qtablewidgetitem18)
-        __qtablewidgetitem19 = QTableWidgetItem()
-        self.tableWidget.setItem(3, 2, __qtablewidgetitem19)
-        __qtablewidgetitem20 = QTableWidgetItem()
-        self.tableWidget.setItem(4, 0, __qtablewidgetitem20)
-        __qtablewidgetitem21 = QTableWidgetItem()
-        self.tableWidget.setItem(4, 1, __qtablewidgetitem21)
-        __qtablewidgetitem22 = QTableWidgetItem()
-        self.tableWidget.setItem(4, 2, __qtablewidgetitem22)
-        __qtablewidgetitem23 = QTableWidgetItem()
-        self.tableWidget.setItem(5, 0, __qtablewidgetitem23)
-        __qtablewidgetitem24 = QTableWidgetItem()
-        self.tableWidget.setItem(5, 1, __qtablewidgetitem24)
-        __qtablewidgetitem25 = QTableWidgetItem()
-        self.tableWidget.setItem(5, 2, __qtablewidgetitem25)
-        self.tableWidget.setObjectName(u"tableWidget")
-        self.tableWidget.setGeometry(QRect(1000, 330, 891, 561))
+        self.scans_tableWidget = QTableWidget(self.centralwidget)
+        if (self.scans_tableWidget.rowCount() < 1):
+            self.scans_tableWidget.setRowCount(1)
+        self.scans_tableWidget.setObjectName(u"scans_tableWidget")
+        self.scans_tableWidget.setGeometry(QRect(1000, 330, 891, 561))
         font = QFont()
         font.setBold(False)
-        self.tableWidget.setFont(font)
-        self.tableWidget.setTabletTracking(True)
-        self.tableWidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerItem)
-        self.tableWidget.horizontalHeader().setStretchLastSection(False)
-        self.tableWidget.verticalHeader().setStretchLastSection(False)
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(20, 20, 921, 271))
-        self.verticalLayout_3 = QVBoxLayout(self.widget)
+        self.scans_tableWidget.setFont(font)
+        self.scans_tableWidget.setTabletTracking(True)
+        self.scans_tableWidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerItem)
+        self.scans_tableWidget.horizontalHeader().setStretchLastSection(False)
+        self.scans_tableWidget.verticalHeader().setStretchLastSection(False)
+        self.layoutWidget1 = QWidget(self.centralwidget)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.layoutWidget1.setGeometry(QRect(20, 20, 921, 271))
+        self.verticalLayout_3 = QVBoxLayout(self.layoutWidget1)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.scan_title_label = QLabel(self.widget)
+        self.scan_title_label = QLabel(self.layoutWidget1)
         self.scan_title_label.setObjectName(u"scan_title_label")
         sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy1.setHorizontalStretch(0)
@@ -166,20 +112,20 @@ class Ui_Peruse(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.current_network_label = QLabel(self.widget)
+        self.current_network_label = QLabel(self.layoutWidget1)
         self.current_network_label.setObjectName(u"current_network_label")
         sizePolicy.setHeightForWidth(self.current_network_label.sizePolicy().hasHeightForWidth())
         self.current_network_label.setSizePolicy(sizePolicy)
 
         self.horizontalLayout.addWidget(self.current_network_label)
 
-        self.current_network_lineEdit = QLineEdit(self.widget)
+        self.current_network_lineEdit = QLineEdit(self.layoutWidget1)
         self.current_network_lineEdit.setObjectName(u"current_network_lineEdit")
         self.current_network_lineEdit.setReadOnly(False)
 
         self.horizontalLayout.addWidget(self.current_network_lineEdit)
 
-        self.scan_button = QPushButton(self.widget)
+        self.scan_button = QPushButton(self.layoutWidget1)
         self.scan_button.setObjectName(u"scan_button")
 
         self.horizontalLayout.addWidget(self.scan_button)
@@ -189,18 +135,18 @@ class Ui_Peruse(object):
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.ip_range_label = QLabel(self.widget)
+        self.ip_range_label = QLabel(self.layoutWidget1)
         self.ip_range_label.setObjectName(u"ip_range_label")
 
         self.horizontalLayout_2.addWidget(self.ip_range_label)
 
-        self.ip_range_lineEdit = QLineEdit(self.widget)
+        self.ip_range_lineEdit = QLineEdit(self.layoutWidget1)
         self.ip_range_lineEdit.setObjectName(u"ip_range_lineEdit")
         self.ip_range_lineEdit.setReadOnly(False)
 
         self.horizontalLayout_2.addWidget(self.ip_range_lineEdit)
 
-        self.cancel_button = QPushButton(self.widget)
+        self.cancel_button = QPushButton(self.layoutWidget1)
         self.cancel_button.setObjectName(u"cancel_button")
 
         self.horizontalLayout_2.addWidget(self.cancel_button)
@@ -208,7 +154,7 @@ class Ui_Peruse(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
-        self.network_tip_label = QLabel(self.widget)
+        self.network_tip_label = QLabel(self.layoutWidget1)
         self.network_tip_label.setObjectName(u"network_tip_label")
         sizePolicy2 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         sizePolicy2.setHorizontalStretch(0)
@@ -223,13 +169,13 @@ class Ui_Peruse(object):
 
         self.verticalLayout_3.addLayout(self.verticalLayout)
 
-        self.widget1 = QWidget(self.centralwidget)
-        self.widget1.setObjectName(u"widget1")
-        self.widget1.setGeometry(QRect(1000, 20, 891, 271))
-        self.verticalLayout_4 = QVBoxLayout(self.widget1)
+        self.layoutWidget2 = QWidget(self.centralwidget)
+        self.layoutWidget2.setObjectName(u"layoutWidget2")
+        self.layoutWidget2.setGeometry(QRect(1000, 20, 891, 271))
+        self.verticalLayout_4 = QVBoxLayout(self.layoutWidget2)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.search_title_label = QLabel(self.widget1)
+        self.search_title_label = QLabel(self.layoutWidget2)
         self.search_title_label.setObjectName(u"search_title_label")
         self.search_title_label.setAlignment(Qt.AlignCenter)
 
@@ -237,32 +183,32 @@ class Ui_Peruse(object):
 
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.radioButton = QRadioButton(self.widget1)
+        self.radioButton = QRadioButton(self.layoutWidget2)
         self.radioButton.setObjectName(u"radioButton")
 
         self.gridLayout.addWidget(self.radioButton, 1, 0, 1, 1)
 
-        self.radioButton_3 = QRadioButton(self.widget1)
+        self.radioButton_3 = QRadioButton(self.layoutWidget2)
         self.radioButton_3.setObjectName(u"radioButton_3")
 
         self.gridLayout.addWidget(self.radioButton_3, 3, 0, 1, 1)
 
-        self.radioButton_2 = QRadioButton(self.widget1)
+        self.radioButton_2 = QRadioButton(self.layoutWidget2)
         self.radioButton_2.setObjectName(u"radioButton_2")
 
         self.gridLayout.addWidget(self.radioButton_2, 2, 0, 1, 1)
 
-        self.textEdit = QTextEdit(self.widget1)
-        self.textEdit.setObjectName(u"textEdit")
+        self.search_textEdit = QTextEdit(self.layoutWidget2)
+        self.search_textEdit.setObjectName(u"search_textEdit")
 
-        self.gridLayout.addWidget(self.textEdit, 0, 0, 1, 2)
+        self.gridLayout.addWidget(self.search_textEdit, 0, 0, 1, 2)
 
-        self.view_all_button = QPushButton(self.widget1)
+        self.view_all_button = QPushButton(self.layoutWidget2)
         self.view_all_button.setObjectName(u"view_all_button")
 
         self.gridLayout.addWidget(self.view_all_button, 2, 1, 1, 1)
 
-        self.search_button = QPushButton(self.widget1)
+        self.search_button = QPushButton(self.layoutWidget2)
         self.search_button.setObjectName(u"search_button")
         sizePolicy3 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
@@ -314,63 +260,6 @@ class Ui_Peruse(object):
         self.scan_output_label.setText(QCoreApplication.translate("Peruse", u"Scan Output :", None))
         self.save_button.setText(QCoreApplication.translate("Peruse", u"Save", None))
         self.delete_button.setText(QCoreApplication.translate("Peruse", u"Delete", None))
-        ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("Peruse", u"scan_id", None));
-        ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("Peruse", u"scan_datetime", None));
-        ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Peruse", u"network_name", None));
-        ___qtablewidgetitem3 = self.tableWidget.verticalHeaderItem(0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Peruse", u"New Row", None));
-        ___qtablewidgetitem4 = self.tableWidget.verticalHeaderItem(1)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Peruse", u"1", None));
-        ___qtablewidgetitem5 = self.tableWidget.verticalHeaderItem(2)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("Peruse", u"2", None));
-        ___qtablewidgetitem6 = self.tableWidget.verticalHeaderItem(3)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("Peruse", u"3", None));
-        ___qtablewidgetitem7 = self.tableWidget.verticalHeaderItem(4)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("Peruse", u"4", None));
-
-        __sortingEnabled = self.tableWidget.isSortingEnabled()
-        self.tableWidget.setSortingEnabled(False)
-        ___qtablewidgetitem8 = self.tableWidget.item(0, 0)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("Peruse", u"adalkakmalknlaknvlaknvlakvnk", None));
-        ___qtablewidgetitem9 = self.tableWidget.item(0, 1)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("Peruse", u"a", None));
-        ___qtablewidgetitem10 = self.tableWidget.item(0, 2)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("Peruse", u"a", None));
-        ___qtablewidgetitem11 = self.tableWidget.item(1, 0)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("Peruse", u"b", None));
-        ___qtablewidgetitem12 = self.tableWidget.item(1, 1)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("Peruse", u"b", None));
-        ___qtablewidgetitem13 = self.tableWidget.item(1, 2)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("Peruse", u"b", None));
-        ___qtablewidgetitem14 = self.tableWidget.item(2, 0)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("Peruse", u"c", None));
-        ___qtablewidgetitem15 = self.tableWidget.item(2, 1)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("Peruse", u"c", None));
-        ___qtablewidgetitem16 = self.tableWidget.item(2, 2)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("Peruse", u"c", None));
-        ___qtablewidgetitem17 = self.tableWidget.item(3, 0)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("Peruse", u"d", None));
-        ___qtablewidgetitem18 = self.tableWidget.item(3, 1)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("Peruse", u"d", None));
-        ___qtablewidgetitem19 = self.tableWidget.item(3, 2)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("Peruse", u"d", None));
-        ___qtablewidgetitem20 = self.tableWidget.item(4, 0)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("Peruse", u"e", None));
-        ___qtablewidgetitem21 = self.tableWidget.item(4, 1)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("Peruse", u"e", None));
-        ___qtablewidgetitem22 = self.tableWidget.item(4, 2)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("Peruse", u"e", None));
-        ___qtablewidgetitem23 = self.tableWidget.item(5, 0)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("Peruse", u"f", None));
-        ___qtablewidgetitem24 = self.tableWidget.item(5, 1)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("Peruse", u"f", None));
-        ___qtablewidgetitem25 = self.tableWidget.item(5, 2)
-        ___qtablewidgetitem25.setText(QCoreApplication.translate("Peruse", u"f", None));
-        self.tableWidget.setSortingEnabled(__sortingEnabled)
-
         self.scan_title_label.setText(QCoreApplication.translate("Peruse", u"Scan a network", None))
         self.current_network_label.setText(QCoreApplication.translate("Peruse", u"Current network:", None))
         self.scan_button.setText(QCoreApplication.translate("Peruse", u"Scan", None))
@@ -381,7 +270,7 @@ class Ui_Peruse(object):
         self.radioButton.setText(QCoreApplication.translate("Peruse", u"Password cracked", None))
         self.radioButton_3.setText(QCoreApplication.translate("Peruse", u"NA", None))
         self.radioButton_2.setText(QCoreApplication.translate("Peruse", u"Password not cracked", None))
-        self.textEdit.setHtml(QCoreApplication.translate("Peruse", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        self.search_textEdit.setHtml(QCoreApplication.translate("Peruse", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "hr { height: 1px; border-width: 0; }\n"
@@ -389,11 +278,10 @@ class Ui_Peruse(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
-        self.textEdit.setPlaceholderText(QCoreApplication.translate("Peruse", u"Enter search string here", None))
+        self.search_textEdit.setPlaceholderText(QCoreApplication.translate("Peruse", u"Enter search string here", None))
         self.view_all_button.setText(QCoreApplication.translate("Peruse", u"View All", None))
         self.search_button.setText(QCoreApplication.translate("Peruse", u"Search", None))
         self.menuScan.setTitle(QCoreApplication.translate("Peruse", u"Scan", None))
         self.menuTools.setTitle(QCoreApplication.translate("Peruse", u"Tools", None))
         self.menuHelp.setTitle(QCoreApplication.translate("Peruse", u"Help", None))
-    # retranslateUi
 

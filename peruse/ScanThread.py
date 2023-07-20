@@ -21,3 +21,4 @@ class ScanThread(QThread):
     
     def cancel(self):
         self.is_cancelled = True
+        print("Scan cancelled")
