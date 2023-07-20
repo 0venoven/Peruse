@@ -80,8 +80,6 @@ class Ui_Peruse(object):
         self.verticalLayout_2.addWidget(self.delete_button)
 
         self.scans_tableWidget = QTableWidget(self.centralwidget)
-        if (self.scans_tableWidget.rowCount() < 1):
-            self.scans_tableWidget.setRowCount(1)
         self.scans_tableWidget.setObjectName(u"scans_tableWidget")
         self.scans_tableWidget.setGeometry(QRect(1000, 330, 891, 561))
         font = QFont()
@@ -89,6 +87,7 @@ class Ui_Peruse(object):
         self.scans_tableWidget.setFont(font)
         self.scans_tableWidget.setTabletTracking(True)
         self.scans_tableWidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerItem)
+        self.scans_tableWidget.setRowCount(0)
         self.scans_tableWidget.horizontalHeader().setStretchLastSection(False)
         self.scans_tableWidget.verticalHeader().setStretchLastSection(False)
         self.layoutWidget1 = QWidget(self.centralwidget)
@@ -284,4 +283,3 @@ class Ui_Peruse(object):
         self.menuScan.setTitle(QCoreApplication.translate("Peruse", u"Scan", None))
         self.menuTools.setTitle(QCoreApplication.translate("Peruse", u"Tools", None))
         self.menuHelp.setTitle(QCoreApplication.translate("Peruse", u"Help", None))
-

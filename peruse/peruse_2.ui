@@ -121,13 +121,15 @@
     <property name="horizontalScrollMode">
      <enum>QAbstractItemView::ScrollPerItem</enum>
     </property>
+    <property name="rowCount">
+     <number>0</number>
+    </property>
     <attribute name="horizontalHeaderStretchLastSection">
      <bool>false</bool>
     </attribute>
     <attribute name="verticalHeaderStretchLastSection">
      <bool>false</bool>
     </attribute>
-    <row/>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">

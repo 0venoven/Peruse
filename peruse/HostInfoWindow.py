@@ -10,8 +10,8 @@ class HostInfoWindow(QMainWindow):
 
         # Create the table widget for host information
         self.table_widget = QTableWidget(self)
-        self.table_widget.setColumnCount(2)
-        self.table_widget.setHorizontalHeaderLabels(["Host ID", "Host Info"])
+        self.table_widget.setColumnCount(3)
+        self.table_widget.setHorizontalHeaderLabels(["Host ID", "Scan ID", "Host IP"])
 
         # Disable editing
         self.table_widget.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -38,8 +38,8 @@ class HostInfoWindow(QMainWindow):
 
         for row, (host_id, scan_id, host_ip) in enumerate(host_data):
             self.table_widget.insertRow(row)
-            self.table_widget.setItem(row, 0, QTableWidgetItem(host_id))
-            self.table_widget.setItem(row, 1, QTableWidgetItem(scan_id))
+            self.table_widget.setItem(row, 0, QTableWidgetItem(str(host_id)))
+            self.table_widget.setItem(row, 1, QTableWidgetItem(str(scan_id)))
             self.table_widget.setItem(row, 2, QTableWidgetItem(host_ip))
 
     def contextMenuEvent(self, event):

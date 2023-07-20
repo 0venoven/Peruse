@@ -1,10 +1,11 @@
 import os
 import subprocess
-from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem, QTableWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem, QTableWidget, QMenu
 import platform
 from ScanThread import ScanThread
 from Database import Database
 from IPRange import IPRange
+from HostInfoWindow import HostInfoWindow
 
 from ui_peruse_2 import Ui_Peruse
 
@@ -30,6 +31,9 @@ class Peruse(QMainWindow, Ui_Peruse):
 
         # add in the sample testing data
         self.add_sample_data()
+
+        # Keep track of open ServicesWindows
+        self.services_windows = []
 
         self.scan_thread = None
         self.db_path = r"results.db"
@@ -70,6 +74,19 @@ class Peruse(QMainWindow, Ui_Peruse):
             self.scans_tableWidget.insertRow(row)
             self.scans_tableWidget.setItem(row, 0, QTableWidgetItem(str(scan_id)))
             self.scans_tableWidget.setItem(row, 1, QTableWidgetItem(scan_result))
+    
+    def contextMenuEvent(self, event):
+        menu = QMenu(self)
+        selected_row = self.scans_tableWidget.currentRow()
+        if selected_row >= 0:
+            scan_id = int(self.scans_tableWidget.item(selected_row, 0).text())
+            menu.addAction("View Host Information", lambda: self.show_host_info(scan_id))
+
+        menu.exec(event.globalPos())
+
+    def show_host_info(self, scan_id):
+        self.host_info_window = HostInfoWindow(scan_id, parent=self)
+        self.host_info_window.show()
 
     def quit(self):
         self.app.quit()
