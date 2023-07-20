@@ -56,7 +56,7 @@ class Peruse(QMainWindow, Ui_Peruse):
     def add_sample_data(self):
 
         # Configure the table widget
-        self.scans_tableWidget.setColumnCount(2)
+        self.scans_tableWidget.setColumnCount(3)
         self.scans_tableWidget.setHorizontalHeaderLabels(["Scan ID", "Scan Result"])
 
         # Disable editing
@@ -64,16 +64,18 @@ class Peruse(QMainWindow, Ui_Peruse):
 
         # Add sample data (you will replace this with data from your SQLite DB)
         scan_data = [
-            (1, "Vulnerable"),
-            (2, "Clean"),
-            (3, "Vulnerable"),
+            (1, "network1", "2021-09-01 12:00:00"),
+            (2, "network2", "2021-09-02 12:00:00"),
+            (3, "network3", "2021-09-03 12:00:00"),
         ]
 
         # Insert the data into the TableWidget
-        for row, (scan_id, scan_result) in enumerate(scan_data):
+        for row, (scan_id, network_name, datetime) in enumerate(scan_data):
             self.scans_tableWidget.insertRow(row)
             self.scans_tableWidget.setItem(row, 0, QTableWidgetItem(str(scan_id)))
-            self.scans_tableWidget.setItem(row, 1, QTableWidgetItem(scan_result))
+            self.scans_tableWidget.setItem(row, 1, QTableWidgetItem(network_name))
+            self.scans_tableWidget.setItem(row, 2, QTableWidgetItem(datetime))
+
     
     def contextMenuEvent(self, event):
         menu = QMenu(self)

@@ -1,12 +1,11 @@
-Login                   X
 Tutorial                V
 Reporting               V (clean up output)
 - Recommendation        Dictionary/database for now?
 Save output             V (integrate db with app)
 Fingerprinting          X
 LinPEAS                 ? (is a script for enumeration, part of it checks for password policies, not sure how to integrate it)
-Scoring                 ? (not rlly sure how to do scoring)
 Data collection         V (dk whether that's the kind of data we want)
 Data analytics          ???
 maybe extend the list of services beyond just SSH? (ivan said he can do it)
-Cancel scan button      ???
+scanning confirmation window
+use actual data for tableview
