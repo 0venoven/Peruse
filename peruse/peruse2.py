@@ -150,7 +150,6 @@ class Peruse(QMainWindow, Ui_Peruse):
         # Create and start the scanning thread
         else:
             self.scan_thread = ScanThread(ip_range)
-            # self.cancel_button.clicked.connect(self.scan_thread.cancel)
             self.scan_thread.scanFinished.connect(self.process_scan_results)
             self.scan_thread.start()
 
