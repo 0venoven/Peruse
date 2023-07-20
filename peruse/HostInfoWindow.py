@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QMainWindow, QTableWidget, QVBoxLayout, QWidget, QMenu, QTableWidgetItem
 from ServicesWindow import ServicesWindow
+from Database import Database
 
 class HostInfoWindow(QMainWindow):
     def __init__(self, scan_id, parent=None):
@@ -15,8 +16,8 @@ class HostInfoWindow(QMainWindow):
         # Disable editing
         self.table_widget.setEditTriggers(QTableWidget.NoEditTriggers)
 
-        # Add sample data (you will replace this with data from your SQLite DB based on the provided scan_id)
-        self.add_sample_data(scan_id)
+        # Populate table
+        self.populate_table(scan_id)
 
         layout = QVBoxLayout()
         layout.addWidget(self.table_widget)
@@ -25,17 +26,21 @@ class HostInfoWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-    def add_sample_data(self, scan_id):
-        # This is just an example to populate the table widget, you'll replace this with data from your SQLite DB.
+    def populate_table(self, scan_id):
+        # This is just sample data to populate the table widget
         host_data = [
-            (f"{scan_id}-1", "Host 1 Info"),
-            (f"{scan_id}-2", "Host 2 Info"),
+            (1, scan_id, "Host 1 Info"),
+            (2, scan_id, "Host 2 Info"),
         ]
 
-        for row, (host_id, host_info) in enumerate(host_data):
+        # get actual data from the database
+        # host_data = Database.get_hosts(scan_id)
+
+        for row, (host_id, scan_id, host_ip) in enumerate(host_data):
             self.table_widget.insertRow(row)
             self.table_widget.setItem(row, 0, QTableWidgetItem(host_id))
-            self.table_widget.setItem(row, 1, QTableWidgetItem(host_info))
+            self.table_widget.setItem(row, 1, QTableWidgetItem(scan_id))
+            self.table_widget.setItem(row, 2, QTableWidgetItem(host_ip))
 
     def contextMenuEvent(self, event):
         menu = QMenu(self)

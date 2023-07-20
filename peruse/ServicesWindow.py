@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QMainWindow, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget
+from Database import Database
 
 class ServicesWindow(QMainWindow):
     def __init__(self, host_id, parent=None):
@@ -15,8 +16,8 @@ class ServicesWindow(QMainWindow):
         # Disable editing
         self.table_widget.setEditTriggers(QTableWidget.NoEditTriggers)
 
-        # Add sample data (you will replace this with data from your SQLite DB based on the provided host_id)
-        self.add_sample_data(host_id)
+        # populate table
+        self.populate_table(host_id)
 
         layout = QVBoxLayout()
         layout.addWidget(self.table_widget)
@@ -25,14 +26,20 @@ class ServicesWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-    def add_sample_data(self, host_id):
-        # This is just an example to populate the table widget, you'll replace this with data from your SQLite DB.
+    def populate_table(self, host_id):
+        # This is just an example to populate the table widget
         service_data = [
-            (f"{host_id}-1", "Service 1 Info"),
-            (f"{host_id}-2", "Service 2 Info"),
+            (1, host_id, "ssh", 22, "yes"),
+            (2, host_id, "ssh", 22, "no"),
         ]
 
-        for row, (service_id, service_info) in enumerate(service_data):
+        # get actual data from the database
+        # service_data = Database.get_services(host_id)
+
+        for row, (service_id, host_id, service_name, port_no, pw_cracked) in enumerate(service_data):
             self.table_widget.insertRow(row)
             self.table_widget.setItem(row, 0, QTableWidgetItem(service_id))
-            self.table_widget.setItem(row, 1, QTableWidgetItem(service_info))
+            self.table_widget.setItem(row, 1, QTableWidgetItem(host_id))
+            self.table_widget.setItem(row, 2, QTableWidgetItem(service_name))
+            self.table_widget.setItem(row, 3, QTableWidgetItem(port_no))
+            self.table_widget.setItem(row, 4, QTableWidgetItem(pw_cracked))
