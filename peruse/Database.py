@@ -10,6 +10,7 @@ class Database():
         conn = None
         try:
             conn = sqlite3.connect(db_path)
+            conn.execute("PRAGMA foreign_keys = 1")
         except Error as e:
             print(e)
 
