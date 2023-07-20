@@ -33,7 +33,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         ip_obj = IPRange(self.os)
         ip_range = ip_obj.get_ip_range()
 
-        self.current_network_lineEdit.setText(connected_ssid)           # REPLACE WITH CONNECTED SSID after fixing it
+        self.current_network_lineEdit.setText(connected_ssid)
         print("Connected SSID:", connected_ssid)
         self.ip_range_lineEdit.setText(ip_range)
 
