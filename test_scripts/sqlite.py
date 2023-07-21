@@ -37,7 +37,7 @@ class Database():
                                         service_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                         host_id INTEGER NOT NULL,
                                         service_name TEXT NOT NULL,
-                                        port_no INT NOT NULL,
+                                        port_no INTEGER NOT NULL,
                                         pw_crakced BOOLEAN NOT NULL,
                                         FOREIGN KEY (host_id) REFERENCES host (host_id));"""
 
@@ -162,3 +162,29 @@ for row in final2:
 print("-------------------")
 for row in final3:
     print(row)
+"""
+key the following into https://dbdiagram.io/d to get the ER diagram:
+TABLE scan {
+    scan_id INTEGER [pk, increment]
+    network_name TEXT
+    date_time TEXT
+}
+
+TABLE host{
+    host_id INTEGER [pk, increment]
+    scan_id INTEGER
+    host_ip TEXT
+}
+
+TABLE service{
+    service_id INTEGER [pk, increment]
+    host_id INTEGER
+    service_name TEXT
+    port_no INT
+    pw_crakced BOOLEAN
+}
+
+Ref: host.scan_id > scan.scan_id
+
+Ref: service.host_id > host.host_id
+"""

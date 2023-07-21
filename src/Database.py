@@ -37,7 +37,7 @@ class Database():
                                         service_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                         host_id INTEGER NOT NULL,
                                         service_name TEXT NOT NULL,
-                                        port_no INT NOT NULL,
+                                        port_no INTEGER NOT NULL,
                                         pw_crakced BOOLEAN NOT NULL,
                                         FOREIGN KEY (host_id) REFERENCES host (host_id));"""
         
