@@ -7,14 +7,14 @@ Peruse is a desktop app that allows you to identify devices in your home that ha
 ## On Windows
 ### Prerequisites
 - download [Microsoft Visual C++ 2008 Redistributable Package](https://www.microsoft.com/en-us/download/details.aspx?id=26368) (prerequisite for the item below)
-- download and extract [THC-Hydra binaries for Windows](https://github.com/maaaaz/thc-hydra-windows/archive/master.zip)
+- download [THC-Hydra binaries for Windows](https://github.com/maaaaz/thc-hydra-windows/archive/master.zip) and extract it directly without changing the folder directory
+(note: turn off windows defender temporarily before downloading the files and only turn it back on after extracting them)
 - install [nmap](https://nmap.org/dist/nmap-7.94-setup.exe) into its default path using its default options
 ### Installing and running the program
 - clone this repository or download ZIP into your desired location
-- open the repository and in peruse2.py, change the path of the hydra binaries to your own under the run_hydra function (for now, this must be manually done but we are looking into automatic detection of file path)
 - run the command prompt or PowerShell as administrator, then enter the following commands:
 ```rb
-> cd {folder_path}\peruse
+> cd {folder_path}\src
 > pip install -r requirements.txt
 > python3 main3.py
 ```

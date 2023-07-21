@@ -188,6 +188,14 @@ class Peruse(QMainWindow, Ui_Peruse):
 
             self.scan_output_text_browser.append("\n")  # Add a new line after each host
 
+    def get_hydra_directory():
+        downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
+        hydra_folder = os.path.join(downloads_dir, 'thc-hydra-windows-master')
+        if os.path.exists(hydra_folder) and os.path.isdir(hydra_folder):
+            return hydra_folder
+        else:
+            return None
+
     def run_hydra(self, host):
         target = host
         port = 22
@@ -195,7 +203,10 @@ class Peruse(QMainWindow, Ui_Peruse):
         username = "grimmie"
         password = "My_V3ryS3cur3_P4ss"
 
-        hydra_dir = r"C:\Users\Ivan\Downloads\thc-hydra-windows-master"  # Replace with the path to hydra.exe on user's system
+        hydra_dir = self.get_hydra_directory()
+        if hydra_dir is None:
+            self.update_hydra_output("Hydra binaries are not found. Please make sure it is downloaded and extracted to Downloads/thc-hydra-windows-master\n")
+            return
 
         try:
             # cd to hydra.exe directory
