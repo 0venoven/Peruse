@@ -188,7 +188,7 @@ class Peruse(QMainWindow, Ui_Peruse):
 
             self.scan_output_text_browser.append("\n")  # Add a new line after each host
 
-    def get_hydra_directory():
+    def get_hydra_directory(self):
         downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
         hydra_folder = os.path.join(downloads_dir, 'thc-hydra-windows-master')
         if os.path.exists(hydra_folder) and os.path.isdir(hydra_folder):
