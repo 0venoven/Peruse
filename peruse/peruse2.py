@@ -37,7 +37,6 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.services_windows = []
 
         self.scan_thread = None
-        self.db_path = r"results.db"
         self.os = platform.system()
 
         # Call the function to get the connected SSID
@@ -50,7 +49,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.current_network_lineEdit.setText(connected_ssid)
         self.ip_range_lineEdit.setText(ip_range)
 
-        Database.main(self.db_path)
+        Database.main()
 
     # REMOVE THIS AFTER THE INTEGRATION WITH DATABASE IS DONE
     def add_sample_data(self):
@@ -62,12 +61,15 @@ class Peruse(QMainWindow, Ui_Peruse):
         # Disable editing
         self.scans_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
 
-        # Add sample data (you will replace this with data from your SQLite DB)
+        # Add sample data
         scan_data = [
             (1, "network1", "2021-09-01 12:00:00"),
             (2, "network2", "2021-09-02 12:00:00"),
             (3, "network3", "2021-09-03 12:00:00"),
         ]
+
+        # get actual data from db
+        # scan_data = Database.get_all_scans()
 
         # Insert the data into the TableWidget
         for row, (scan_id, network_name, datetime) in enumerate(scan_data):

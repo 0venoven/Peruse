@@ -6,10 +6,10 @@ class Database():
         super(Database,self).__init__()
         self.arg = arg
 
-    def create_connection(db_path):
+    def create_connection():
         conn = None
         try:
-            conn = sqlite3.connect(db_path)
+            conn = sqlite3.connect(r"results.db")
             conn.execute("PRAGMA foreign_keys = 1")
         except Error as e:
             print(e)
@@ -23,7 +23,7 @@ class Database():
         except Error as e:
             print(e)
 
-    def main(db_path):
+    def main():
         create_scan_table = """ CREATE TABLE IF NOT EXISTS scan (
                                         scan_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                         network_name TEXT NOT NULL,
@@ -41,7 +41,7 @@ class Database():
                                         pw_crakced BOOLEAN NOT NULL,
                                         FOREIGN KEY (host_id) REFERENCES host (host_id));"""
         
-        conn = Database.create_connection(db_path)
+        conn = Database.create_connection()
         if conn is not None:
             Database.create_table(conn, create_scan_table)
             Database.create_table(conn, create_host_table)
@@ -49,8 +49,8 @@ class Database():
         else:
             print("Error! cannot create the database connection.")
     
-    def get_all_scans(db_path):
-        conn = Database.create_connection(db_path)
+    def get_all_scans():
+        conn = Database.create_connection()
         try:
             cur = conn.cursor()
             cur.execute("SELECT * FROM scan")
@@ -59,8 +59,8 @@ class Database():
             print("Error: failed to get scan results")
             print(e)
     
-    def get_hosts(db_path, scan_no):
-        conn = Database.create_connection(db_path)
+    def get_hosts(scan_no):
+        conn = Database.create_connection()
         try:
             cur = conn.cursor()
             cur.execute("SELECT * FROM host WHERE scan_id = ?", [scan_no])
@@ -69,8 +69,8 @@ class Database():
             print("Error: failed to get host results")
             print(e)
     
-    def get_services(db_path, host_no):
-        conn = Database.create_connection(db_path)
+    def get_services(host_no):
+        conn = Database.create_connection()
         try:
             cur = conn.cursor()
             cur.execute("SELECT * FROM service WHERE host_id = ?", [host_no])
@@ -79,10 +79,10 @@ class Database():
             print("Error: failed to get service results")
             print(e)
 
-    def insert_scan(db_path, network_name):
+    def insert_scan(network_name):
         # prob nd to edit this fn later
         # maybe accept more params (those that are placeholders for now)
-        conn = Database.create_connection(db_path)
+        conn = Database.create_connection()
         try:
             cur = conn.cursor()
             # insert into scan table
@@ -107,8 +107,8 @@ class Database():
             print("Error: failed to insert scan result")
             print(e)
     
-    def delete_result(db_path, scan_id):
-        conn = Database.create_connection(db_path)
+    def delete_result(scan_id):
+        conn = Database.create_connection()
         try:
             cur = conn.cursor()
             # get corresponding list of host ids
