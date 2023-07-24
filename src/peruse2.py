@@ -225,56 +225,7 @@ class Peruse(QMainWindow, Ui_Peruse):
                             "extrainfo":"",
                             "conf":"3",
                             "cpe":""
-                        },
-                        "445":{
-                            "state":"open",
-                            "reason":"syn-ack",
-                            "name":"microsoft-ds",
-                            "product":"",
-                            "version":"",
-                            "extrainfo":"",
-                            "conf":"3",
-                            "cpe":""
-                        },
-                        "902":{
-                            "state":"open",
-                            "reason":"syn-ack",
-                            "name":"iss-realsecure",
-                            "product":"",
-                            "version":"",
-                            "extrainfo":"",
-                            "conf":"3",
-                            "cpe":""
-                        },
-                        "912":{
-                            "state":"open",
-                            "reason":"syn-ack",
-                            "name":"apex-mesh",
-                            "product":"",
-                            "version":"",
-                            "extrainfo":"",
-                            "conf":"3",
-                            "cpe":""
                         }
-                    }
-                },
-                "192.168.5.129":{
-                    "hostnames":[
-                        {
-                            "name":"",
-                            "type":""
-                        }
-                    ],
-                    "addresses":{
-                        "ipv4":"192.168.5.129",
-                        "mac":"00:0C:29:2A:D6:F7"
-                    },
-                    "vendor":{
-                        "00:0C:29:2A:D6:F7":"VMware"
-                    },
-                    "status":{
-                        "state":"up",
-                        "reason":"arp-response"
                     }
                 },
                 "192.168.5.254":{
