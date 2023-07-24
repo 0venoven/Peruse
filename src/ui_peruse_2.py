@@ -20,8 +20,7 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLay
     QHBoxLayout, QHeaderView, QLabel, QLineEdit,
     QMainWindow, QMenu, QMenuBar, QPushButton,
     QRadioButton, QSizePolicy, QStatusBar, QTableWidget,
-    QTableWidgetItem, QTextBrowser, QTextEdit, QVBoxLayout,
-    QWidget)
+    QTableWidgetItem, QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_Peruse(object):
     def setupUi(self, Peruse):
@@ -51,13 +50,10 @@ class Ui_Peruse(object):
         self.horizontal_line_1.setGeometry(QRect(1010, 300, 871, 20))
         self.horizontal_line_1.setFrameShape(QFrame.HLine)
         self.horizontal_line_1.setFrameShadow(QFrame.Sunken)
-        self.scan_output_text_browser = QTextBrowser(self.centralwidget)
-        self.scan_output_text_browser.setObjectName(u"scan_output_text_browser")
-        self.scan_output_text_browser.setGeometry(QRect(100, 330, 741, 561))
-        self.scan_output_label = QLabel(self.centralwidget)
-        self.scan_output_label.setObjectName(u"scan_output_label")
-        self.scan_output_label.setGeometry(QRect(20, 330, 81, 21))
-        self.scan_output_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+        self.scan_details_label = QLabel(self.centralwidget)
+        self.scan_details_label.setObjectName(u"scan_details_label")
+        self.scan_details_label.setGeometry(QRect(20, 330, 71, 21))
+        self.scan_details_label.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.vertical_line_1 = QFrame(self.centralwidget)
         self.vertical_line_1.setObjectName(u"vertical_line_1")
         self.vertical_line_1.setGeometry(QRect(960, 50, 20, 831))
@@ -86,7 +82,8 @@ class Ui_Peruse(object):
         font.setBold(False)
         self.scans_tableWidget.setFont(font)
         self.scans_tableWidget.setTabletTracking(True)
-        self.scans_tableWidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerItem)
+        self.scans_tableWidget.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.scans_tableWidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
         self.scans_tableWidget.setRowCount(0)
         self.scans_tableWidget.horizontalHeader().setStretchLastSection(False)
         self.scans_tableWidget.verticalHeader().setStretchLastSection(False)
@@ -142,13 +139,13 @@ class Ui_Peruse(object):
 
         self.verticalLayout_4.addLayout(self.gridLayout)
 
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(21, 21, 921, 271))
-        self.verticalLayout = QVBoxLayout(self.widget)
+        self.layoutWidget2 = QWidget(self.centralwidget)
+        self.layoutWidget2.setObjectName(u"layoutWidget2")
+        self.layoutWidget2.setGeometry(QRect(21, 21, 921, 271))
+        self.verticalLayout = QVBoxLayout(self.layoutWidget2)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.scan_title_label = QLabel(self.widget)
+        self.scan_title_label = QLabel(self.layoutWidget2)
         self.scan_title_label.setObjectName(u"scan_title_label")
         sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
@@ -163,25 +160,25 @@ class Ui_Peruse(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.current_network_label = QLabel(self.widget)
+        self.current_network_label = QLabel(self.layoutWidget2)
         self.current_network_label.setObjectName(u"current_network_label")
         sizePolicy.setHeightForWidth(self.current_network_label.sizePolicy().hasHeightForWidth())
         self.current_network_label.setSizePolicy(sizePolicy)
 
         self.gridLayout_2.addWidget(self.current_network_label, 0, 0, 1, 2)
 
-        self.current_network_lineEdit = QLineEdit(self.widget)
+        self.current_network_lineEdit = QLineEdit(self.layoutWidget2)
         self.current_network_lineEdit.setObjectName(u"current_network_lineEdit")
         self.current_network_lineEdit.setReadOnly(False)
 
         self.gridLayout_2.addWidget(self.current_network_lineEdit, 0, 2, 1, 1)
 
-        self.ip_range_label = QLabel(self.widget)
+        self.ip_range_label = QLabel(self.layoutWidget2)
         self.ip_range_label.setObjectName(u"ip_range_label")
 
         self.gridLayout_2.addWidget(self.ip_range_label, 1, 0, 1, 1)
 
-        self.ip_range_lineEdit = QLineEdit(self.widget)
+        self.ip_range_lineEdit = QLineEdit(self.layoutWidget2)
         self.ip_range_lineEdit.setObjectName(u"ip_range_lineEdit")
         self.ip_range_lineEdit.setReadOnly(False)
 
@@ -190,7 +187,7 @@ class Ui_Peruse(object):
 
         self.horizontalLayout.addLayout(self.gridLayout_2)
 
-        self.scan_button = QPushButton(self.widget)
+        self.scan_button = QPushButton(self.layoutWidget2)
         self.scan_button.setObjectName(u"scan_button")
         sizePolicy3 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Ignored)
         sizePolicy3.setHorizontalStretch(0)
@@ -203,7 +200,7 @@ class Ui_Peruse(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
-        self.network_tip_label = QLabel(self.widget)
+        self.network_tip_label = QLabel(self.layoutWidget2)
         self.network_tip_label.setObjectName(u"network_tip_label")
         sizePolicy4 = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         sizePolicy4.setHorizontalStretch(0)
@@ -215,6 +212,42 @@ class Ui_Peruse(object):
 
         self.verticalLayout.addWidget(self.network_tip_label)
 
+        self.host_details_tableWidget = QTableWidget(self.centralwidget)
+        self.host_details_tableWidget.setObjectName(u"host_details_tableWidget")
+        self.host_details_tableWidget.setGeometry(QRect(100, 450, 751, 441))
+        self.host_details_tableWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.host_details_tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.host_details_tableWidget.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.host_details_tableWidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.scan_details_tableWidget = QTableWidget(self.centralwidget)
+        if (self.scan_details_tableWidget.columnCount() < 5):
+            self.scan_details_tableWidget.setColumnCount(5)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        self.scan_details_tableWidget.setObjectName(u"scan_details_tableWidget")
+        self.scan_details_tableWidget.setGeometry(QRect(100, 330, 751, 81))
+        self.scan_details_tableWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.scan_details_tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.scan_details_tableWidget.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.scan_details_tableWidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.scan_details_tableWidget.horizontalHeader().setCascadingSectionResizes(True)
+        self.scan_details_tableWidget.horizontalHeader().setProperty("showSortIndicator", False)
+        self.scan_details_tableWidget.horizontalHeader().setStretchLastSection(False)
+        self.scan_details_tableWidget.verticalHeader().setCascadingSectionResizes(False)
+        self.scan_details_tableWidget.verticalHeader().setHighlightSections(True)
+        self.scan_details_tableWidget.verticalHeader().setProperty("showSortIndicator", False)
+        self.scan_details_tableWidget.verticalHeader().setStretchLastSection(False)
+        self.host_details_label = QLabel(self.centralwidget)
+        self.host_details_label.setObjectName(u"host_details_label")
+        self.host_details_label.setGeometry(QRect(20, 450, 71, 16))
         Peruse.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(Peruse)
         self.menubar.setObjectName(u"menubar")
@@ -251,7 +284,7 @@ class Ui_Peruse(object):
         self.actionFilter.setText(QCoreApplication.translate("Peruse", u"Filter", None))
         self.actionAbout.setText(QCoreApplication.translate("Peruse", u"About Peruse", None))
         self.actionAbout_QT.setText(QCoreApplication.translate("Peruse", u"About QT", None))
-        self.scan_output_label.setText(QCoreApplication.translate("Peruse", u"Scan Output :", None))
+        self.scan_details_label.setText(QCoreApplication.translate("Peruse", u"Scan details :", None))
         self.save_button.setText(QCoreApplication.translate("Peruse", u"Save", None))
         self.delete_button.setText(QCoreApplication.translate("Peruse", u"Delete", None))
         self.search_title_label.setText(QCoreApplication.translate("Peruse", u"Search a scan", None))
@@ -274,6 +307,17 @@ class Ui_Peruse(object):
         self.ip_range_label.setText(QCoreApplication.translate("Peruse", u"IP range:", None))
         self.scan_button.setText(QCoreApplication.translate("Peruse", u"Scan", None))
         self.network_tip_label.setText(QCoreApplication.translate("Peruse", u"If this is not a network that you own/want to scan, please change to the desired network. Also, as dictionary attacks (multiple login attempts) are used, please take note that it could potentially lock up your devices or cause other forms of harm.", None))
+        ___qtablewidgetitem = self.scan_details_tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Peruse", u"Nmap Command", None));
+        ___qtablewidgetitem1 = self.scan_details_tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("Peruse", u"Scan Type", None));
+        ___qtablewidgetitem2 = self.scan_details_tableWidget.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Peruse", u"Date Time", None));
+        ___qtablewidgetitem3 = self.scan_details_tableWidget.horizontalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Peruse", u"Time Elapsed", None));
+        ___qtablewidgetitem4 = self.scan_details_tableWidget.horizontalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Peruse", u"Devices Detected", None));
+        self.host_details_label.setText(QCoreApplication.translate("Peruse", u"Host details :", None))
         self.menuScan.setTitle(QCoreApplication.translate("Peruse", u"Scan", None))
         self.menuTools.setTitle(QCoreApplication.translate("Peruse", u"Tools", None))
         self.menuHelp.setTitle(QCoreApplication.translate("Peruse", u"Help", None))

@@ -24,6 +24,10 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.actionAbout_QT.triggered.connect(self.aboutQt)
         self.scan_button.clicked.connect(self.scan_confirm)
 
+        # Disable editing
+        self.scan_details_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.host_details_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+
         # Insert the data into the TableWidget here
         # self.save_button.clicked.connect(self.save)?
         # self.view_all_button.clicked.connect(self.view_all)?
@@ -152,41 +156,66 @@ class Peruse(QMainWindow, Ui_Peruse):
         else:
             os.environ['PATH'] = nmap_dir + ':' + os.environ['PATH']
 
-        self.scan_output_text_browser.clear()
-        self.scan_output_text_browser.append(f"Scanning {ip_range}...")
+        self.host_details_tableWidget.clearContents()
+        # self.scan_output_text_browser.clear()
+        # self.scan_output_text_browser.append(f"Scanning {ip_range}...")
 
-        if ip_range is None:
-            self.scan_output_text_browser.append(f"No IP range detected. Please make sure you are connected to the network.")
+        # if ip_range is None:
+        #     self.scan_output_text_browser.append(f"No IP range detected. Please make sure you are connected to the network.")
 
         # Create and start the scanning thread
-        else:
-            self.scan_thread = ScanThread(ip_range)
-            self.scan_thread.scanFinished.connect(self.process_scan_results)
-            self.scan_thread.start()
+        #else:
+        self.scan_thread = ScanThread(ip_range)
+        self.scan_thread.scanFinished.connect(self.process_scan_results)
+        self.scan_thread.start()
 
     def process_scan_results(self, scan_output):
-        for host, result in scan_output['scan'].items():
-            self.scan_output_text_browser.append(f"Scan results for {host}:\n")
 
-            # Check if 'tcp' key is present in the result dictionary
-            if 'tcp' in result:
-                # Iterate over the scan result items
-                for port, port_result in result['tcp'].items():
-                    service_name = port_result['name']
-                    state = port_result['state']
-                    self.scan_output_text_browser.append(f"Port: {port}\tService: {service_name}\t\tState: {state}")
+        # Set items for scan_details_tableWidget
+        self.scan_details_tableWidget.insertRow(0)
+        self.scan_details_tableWidget.setItem(0, 0, QTableWidgetItem(str(scan_output['nmap']['command_line'])))
+        self.scan_details_tableWidget.setItem(0, 1, QTableWidgetItem(str(scan_output['nmap']['scaninfo']['tcp']['method'])))
+        self.scan_details_tableWidget.setItem(0, 2, QTableWidgetItem(str(scan_output['nmap']['scanstats']['timestr'])))
+        self.scan_details_tableWidget.setItem(0, 3, QTableWidgetItem(str(scan_output['nmap']['scanstats']['elapsed']) + "s"))
+        self.scan_details_tableWidget.setItem(0, 4, QTableWidgetItem(str(scan_output['nmap']['scanstats']['uphosts'] + " / " + scan_output['nmap']['scanstats']['totalhosts'])))
 
-                    # Check if the service is SSH
-                    if service_name.lower() == 'ssh' and state.lower() == 'open':
-                        self.scan_output_text_browser.append("Running Hydra to check SSH login...\n")
+        # Resize columns to fit contents
+        self.scan_details_tableWidget.resizeColumnsToContents()
+        for col in range(self.scan_details_tableWidget.columnCount()):
+            column_width = self.scan_details_tableWidget.columnWidth(col)
+            self.scan_details_tableWidget.setColumnWidth(col, min(column_width, 200))
 
-                        # Run Hydra for SSH service
-                        self.run_hydra(host)
+        # Set items for host_details_tableWidget
+        self.host_details_tableWidget.setColumnCount(1)
+        self.host_details_tableWidget.setRowCount(1)
+        self.host_details_tableWidget.setHorizontalHeaderLabels(["Host Details"])
 
-            else:
-                self.scan_output_text_browser.append("No TCP port information available")
+        # Dump the scan output to the table widget, set entire scan output into one cell
+        self.host_details_tableWidget.setItem(0, 0, QTableWidgetItem(str(scan_output['scan'])))
+        
 
-            self.scan_output_text_browser.append("\n")  # Add a new line after each host
+        # for host, result in scan_output['scan'].items():
+        #     self.scan_output_text_browser.append(f"Scan results for {host}:\n")
+
+        #     # Check if 'tcp' key is present in the result dictionary
+        #     if 'tcp' in result:
+        #         # Iterate over the scan result items
+        #         for port, port_result in result['tcp'].items():
+        #             service_name = port_result['name']
+        #             state = port_result['state']
+        #             self.scan_output_text_browser.append(f"Port: {port}\tService: {service_name}\t\tState: {state}")
+
+        #             # Check if the service is SSH
+        #             if service_name.lower() == 'ssh' and state.lower() == 'open':
+        #                 self.scan_output_text_browser.append("Running Hydra to check SSH login...\n")
+
+        #                 # Run Hydra for SSH service
+        #                 self.run_hydra(host)
+
+        #     else:
+        #         self.scan_output_text_browser.append("No TCP port information available")
+
+        #     self.scan_output_text_browser.append("\n")  # Add a new line after each host
 
     def get_hydra_directory(self):
         downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
@@ -233,8 +262,8 @@ class Peruse(QMainWindow, Ui_Peruse):
         except subprocess.CalledProcessError as e:
             self.update_hydra_output(f"Hydra command execution failed with error:\n{e}\n")
 
-    def update_hydra_output(self, output):
-        self.scan_output_text_browser.append(output)
+    # def update_hydra_output(self, output):
+    #     self.scan_output_text_browser.append(output)
 
     def about(self):
         QMessageBox.information(

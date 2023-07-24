@@ -36,27 +36,17 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="scan_output_text_browser">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>330</y>
-      <width>741</width>
-      <height>561</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="scan_output_label">
+   <widget class="QLabel" name="scan_details_label">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>330</y>
-      <width>81</width>
+      <width>71</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>Scan Output :</string>
+     <string>Scan details :</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -118,8 +108,11 @@
     <property name="tabletTracking">
      <bool>true</bool>
     </property>
+    <property name="verticalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
     <property name="horizontalScrollMode">
-     <enum>QAbstractItemView::ScrollPerItem</enum>
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
     </property>
     <property name="rowCount">
      <number>0</number>
@@ -215,7 +208,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -316,6 +309,109 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QTableWidget" name="host_details_tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>450</y>
+      <width>751</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="verticalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
+    <property name="horizontalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="scan_details_tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>330</y>
+      <width>751</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="verticalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAsNeeded</enum>
+    </property>
+    <property name="verticalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
+    <property name="horizontalScrollMode">
+     <enum>QAbstractItemView::ScrollPerPixel</enum>
+    </property>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderHighlightSections">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="verticalHeaderStretchLastSection">
+     <bool>false</bool>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Nmap Command</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Scan Type</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Date Time</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Time Elapsed</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Devices Detected</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="host_details_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>450</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Host details :</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
