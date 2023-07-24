@@ -16,5 +16,5 @@
 ### Running the program
 - make sure to cd into the correct directory if you have not already done so
 ```rb
-> python3 main3.py
+> python main3.py
 ```
