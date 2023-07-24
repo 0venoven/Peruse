@@ -34,9 +34,6 @@ class Peruse(QMainWindow, Ui_Peruse):
         # self.delete_button.clicked.connect(self.delete)?
         # Take from db
 
-        # add in the sample testing data
-        self.add_sample_data()
-
         # Keep track of open ServicesWindows
         self.services_windows = []
 
@@ -54,13 +51,14 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.ip_range_lineEdit.setText(ip_range)
 
         Database.main()
+        # add data if any
+        self.populate_table()
 
-    # REMOVE THIS AFTER THE INTEGRATION WITH DATABASE IS DONE
-    def add_sample_data(self):
+    def populate_table(self):
 
         # Configure the table widget
         self.scans_tableWidget.setColumnCount(3)
-        self.scans_tableWidget.setHorizontalHeaderLabels(["Scan ID", "Scan Result"])
+        self.scans_tableWidget.setHorizontalHeaderLabels(["Scan ID", "Network Name", "Date/Time"])
 
         # Disable editing
         self.scans_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -72,7 +70,7 @@ class Peruse(QMainWindow, Ui_Peruse):
             (3, "network3", "2021-09-03 12:00:00"),
         ]
 
-        # get actual data from db
+        # get actual data from db (uncomment the below after integration with db)
         # scan_data = Database.get_all_scans()
 
         # Insert the data into the TableWidget
