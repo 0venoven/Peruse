@@ -12,6 +12,5 @@ As Peruse is still in its initial stages of development, it has quite a few limi
 - app is limited to running on windows for now
 - lack of ability to check for password policies (possible integration with winpeas to do so)
 - lack of a scoring system
-- data is only saved to a local database and does not make any API call to backend systems
-- cannot do any device fingerprinting
+- no device fingerprinting
 - as the dictionary attack is solely based on rockyou.txt, any password that is still relatively vulnerable but not in the list will not be cracked, leaving it undetected
