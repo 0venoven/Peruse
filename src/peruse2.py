@@ -314,7 +314,7 @@ class Peruse(QMainWindow, Ui_Peruse):
 
         hydra_dir = self.get_hydra_directory()
         if hydra_dir is None:
-            self.update_hydra_output("Hydra binaries are not found. Please make sure it is downloaded and extracted to Downloads/thc-hydra-windows-master\n")
+            self.update_hydra_output("Hydra binaries are not found. Please make sure it is downloaded and extracted to Downloads folder\n")
             return
 
         try:

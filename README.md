@@ -3,7 +3,7 @@
 ## On Windows
 ### Prerequisites
 - download [Microsoft Visual C++ 2008 Redistributable Package](https://www.microsoft.com/en-us/download/details.aspx?id=26368) (prerequisite for the item below)
-- download [THC-Hydra binaries for Windows](https://github.com/maaaaz/thc-hydra-windows/archive/master.zip) and extract it directly without changing the folder directory
+- download [THC-Hydra binaries for Windows](https://github.com/maaaaz/thc-hydra-windows/archive/master.zip) and extract it into the Downloads folder
 (note: turn off windows defender temporarily before downloading the files and only turn it back on after extracting them)
 - install [nmap](https://nmap.org/dist/nmap-7.94-setup.exe) into its default path using its default options
 ### Installation
