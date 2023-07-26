@@ -10,5 +10,5 @@ class ScanThread(QThread):
 
     def run(self):
         nm = nmap.PortScanner()
-        scan_output = nm.scan(hosts=self.ip_range, arguments="")
+        scan_output = nm.scan(hosts=self.ip_range, arguments="-A -T4")
         self.scanFinished.emit(scan_output)

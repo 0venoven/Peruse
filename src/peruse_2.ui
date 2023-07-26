@@ -331,6 +331,81 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <property name="horizontalScrollMode">
      <enum>QAbstractItemView::ScrollPerPixel</enum>
     </property>
+    <column>
+     <property name="text">
+      <string>Device IP</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Device Type</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>MAC Address</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Vendor</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Device Status</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Service Name</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Service Port</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>State</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Software Product</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Service Version</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Version Information</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>CPE (Common Platform Enumeration)</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Script</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Password Cracked</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Recommendation</string>
+     </property>
+    </column>
    </widget>
    <widget class="QTableWidget" name="scan_details_tableWidget">
     <property name="geometry">

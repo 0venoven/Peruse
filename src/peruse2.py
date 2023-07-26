@@ -154,8 +154,9 @@ class Peruse(QMainWindow, Ui_Peruse):
         else:
             os.environ['PATH'] = nmap_dir + ':' + os.environ['PATH']
 
+        # Clear the table widgets
+        self.scan_details_tableWidget.clearContents()
         self.host_details_tableWidget.clearContents()
-        # self.scan_output_text_browser.clear()
         # self.scan_output_text_browser.append(f"Scanning {ip_range}...")
 
         # if ip_range is None:
@@ -170,85 +171,120 @@ class Peruse(QMainWindow, Ui_Peruse):
     def process_scan_results(self, scan_output):
         # sample scan_output
         """
+{
+  'nmap': {
+    'command_line': 'nmap -oX - -A -T4 192.168.158.0/24',
+    'scaninfo': {
+      'tcp': {
+        'method': 'syn'
+      }
+    },
+    'scanstats': {
+      'timestr': 'Tue Jul 25 13:00:15 2023',
+      'elapsed': '77.20',
+      'uphosts': '3',
+      'downhosts': '253',
+      'totalhosts': '256'
+    }
+  },
+  'scan': {
+    '192.168.158.146': {
+      'hostnames': [
         {
-            "nmap":{
-                "command_line":"nmap -oX - 192.168.5.0/24",
-                "scaninfo":{
-                    "tcp":{
-                        "method":"syn",
-                        "services":"1,3-4,6-7,9,13,17,19-26,30,32-33,37,42-43,49,53,70,79-85,88-90,99-100,106,109-111,113,119,125,135,139,143-144,146,161,163,179,199,211-212,222,254-256,259,264,280,301,306,311,340,366,389,406-407,416-417,425,427,443-445,458,464-465,481,497,500,512-515,524,541,543-545,548,554-555,563,587,593,616-617,625,631,636,646,648,666-668,683,687,691,700,705,711,714,720,722,726,749,765,777,783,787,800-801,808,843,873,880,888,898,900-903,911-912,981,987,990,992-993,995,999-1002,1007,1009-1011,1021-1100,1102,1104-1108,1110-1114,1117,1119,1121-1124,1126,1130-1132,1137-1138,1141,1145,1147-1149,1151-1152,1154,1163-1166,1169,1174-1175,1183,1185-1187,1192,1198-1199,1201,1213,1216-1218,1233-1234,1236,1244,1247-1248,1259,1271-1272,1277,1287,1296,1300-1301,1309-1311,1322,1328,1334,1352,1417,1433-1434,1443,1455,1461,1494,1500-1501,1503,1521,1524,1533,1556,1580,1583,1594,1600,1641,1658,1666,1687-1688,1700,1717-1721,1723,1755,1761,1782-1783,1801,1805,1812,1839-1840,1862-1864,1875,1900,1914,1935,1947,1971-1972,1974,1984,1998-2010,2013,2020-2022,2030,2033-2035,2038,2040-2043,2045-2049,2065,2068,2099-2100,2103,2105-2107,2111,2119,2121,2126,2135,2144,2160-2161,2170,2179,2190-2191,2196,2200,2222,2251,2260,2288,2301,2323,2366,2381-2383,2393-2394,2399,2401,2492,2500,2522,2525,2557,2601-2602,2604-2605,2607-2608,2638,2701-2702,2710,2717-2718,2725,2800,2809,2811,2869,2875,2909-2910,2920,2967-2968,2998,3000-3001,3003,3005-3007,3011,3013,3017,3030-3031,3052,3071,3077,3128,3168,3211,3221,3260-3261,3268-3269,3283,3300-3301,3306,3322-3325,3333,3351,3367,3369-3372,3389-3390,3404,3476,3493,3517,3527,3546,3551,3580,3659,3689-3690,3703,3737,3766,3784,3800-3801,3809,3814,3826-3828,3851,3869,3871,3878,3880,3889,3905,3914,3918,3920,3945,3971,3986,3995,3998,4000-4006,4045,4111,4125-4126,4129,4224,4242,4279,4321,4343,4443-4446,4449,4550,4567,4662,4848,4899-4900,4998,5000-5004,5009,5030,5033,5050-5051,5054,5060-5061,5080,5087,5100-5102,5120,5190,5200,5214,5221-5222,5225-5226,5269,5280,5298,5357,5405,5414,5431-5432,5440,5500,5510,5544,5550,5555,5560,5566,5631,5633,5666,5678-5679,5718,5730,5800-5802,5810-5811,5815,5822,5825,5850,5859,5862,5877,5900-5904,5906-5907,5910-5911,5915,5922,5925,5950,5952,5959-5963,5987-5989,5998-6007,6009,6025,6059,6100-6101,6106,6112,6123,6129,6156,6346,6389,6502,6510,6543,6547,6565-6567,6580,6646,6666-6669,6689,6692,6699,6779,6788-6789,6792,6839,6881,6901,6969,7000-7002,7004,7007,7019,7025,7070,7100,7103,7106,7200-7201,7402,7435,7443,7496,7512,7625,7627,7676,7741,7777-7778,7800,7911,7920-7921,7937-7938,7999-8002,8007-8011,8021-8022,8031,8042,8045,8080-8090,8093,8099-8100,8180-8181,8192-8194,8200,8222,8254,8290-8292,8300,8333,8383,8400,8402,8443,8500,8600,8649,8651-8652,8654,8701,8800,8873,8888,8899,8994,9000-9003,9009-9011,9040,9050,9071,9080-9081,9090-9091,9099-9103,9110-9111,9200,9207,9220,9290,9415,9418,9485,9500,9502-9503,9535,9575,9593-9595,9618,9666,9876-9878,9898,9900,9917,9929,9943-9944,9968,9998-10004,10009-10010,10012,10024-10025,10082,10180,10215,10243,10566,10616-10617,10621,10626,10628-10629,10778,11110-11111,11967,12000,12174,12265,12345,13456,13722,13782-13783,14000,14238,14441-14442,15000,15002-15004,15660,15742,16000-16001,16012,16016,16018,16080,16113,16992-16993,17877,17988,18040,18101,18988,19101,19283,19315,19350,19780,19801,19842,20000,20005,20031,20221-20222,20828,21571,22939,23502,24444,24800,25734-25735,26214,27000,27352-27353,27355-27356,27715,28201,30000,30718,30951,31038,31337,32768-32785,33354,33899,34571-34573,35500,38292,40193,40911,41511,42510,44176,44442-44443,44501,45100,48080,49152-49161,49163,49165,49167,49175-49176,49400,49999-50003,50006,50300,50389,50500,50636,50800,51103,51493,52673,52822,52848,52869,54045,54328,55055-55056,55555,55600,56737-56738,57294,57797,58080,60020,60443,61532,61900,62078,63331,64623,64680,65000,65129,65389"
-                    }
-                },
-                "scanstats":{
-                    "downhosts":"253",
-                    "elapsed":"10.70",
-                    "timestr":"Mon Jul 24 17:04:43 2023",
-                    "totalhosts":"256",
-                    "uphosts":"3"
-                }
-            },
-            "scan":{
-                "192.168.5.1":{
-                    "hostnames":[
-                        {
-                            "name":"",
-                            "type":""
-                        }
-                    ],
-                    "addresses":{
-                        "ipv4":"192.168.5.1"
-                    },
-                    "vendor":{
-                        
-                    },
-                    "status":{
-                        "state":"up",
-                        "reason":"localhost-response"
-                    },
-                    "tcp":{
-                        "135":{
-                            "state":"open",
-                            "reason":"syn-ack",
-                            "name":"msrpc",
-                            "product":"",
-                            "version":"",
-                            "extrainfo":"",
-                            "conf":"3",
-                            "cpe":""
-                        },
-                        "139":{
-                            "state":"open",
-                            "reason":"syn-ack",
-                            "name":"netbios-ssn",
-                            "product":"",
-                            "version":"",
-                            "extrainfo":"",
-                            "conf":"3",
-                            "cpe":""
-                        }
-                    }
-                },
-                "192.168.5.254":{
-                    "hostnames":[
-                        {
-                            "name":"",
-                            "type":""
-                        }
-                    ],
-                    "addresses":{
-                        "ipv4":"192.168.5.254",
-                        "mac":"00:50:56:F2:BA:7B"
-                    },
-                    "vendor":{
-                        "00:50:56:F2:BA:7B":"VMware"
-                    },
-                    "status":{
-                        "state":"up",
-                        "reason":"arp-response"
-                    }
-                }
-            }
+          'name': '',
+          'type': ''
         }
+      ],
+      'addresses': {
+        'ipv4': '192.168.158.146',
+        'mac': '00:0C:29:50:CD:DB'
+      },
+      'vendor': {
+        '00:0C:29:50:CD:DB': 'VMware'
+      },
+      'status': {
+        'state': 'up',
+        'reason': 'arp-response'
+      },
+      'uptime': {
+        'seconds': '3038809',
+        'lastboot': 'Tue Jun 20 08:52:45 2023'
+      },
+      'tcp': {
+        21: {
+          'state': 'open',
+          'reason': 'syn-ack',
+          'name': 'ftp',
+          'product': 'vsftpd',
+          'version': '3.0.3',
+          'extrainfo': '',
+          'conf': '10',
+          'cpe': 'cpe:/a:vsftpd:vsftpd:3.0.3',
+          'script': {
+            'ftp-anon': 'Anonymous FTP login allowed (FTP code 230)\n-rw-r--r--    1 1000     1000          776 May 30  2021 note.txt',
+            'ftp-syst': '\n  STAT:  \nFTP server status:\n     Connected to ::ffff:192.168.158.1\n     Logged in as ftp\n     TYPE: ASCII\n      No session bandwidth limit\n     Session timeout in seconds is 300\n     Control connection is plain text\n     Data connections will be plain text\n     At session startup, client count was 4\n     vsFTPd 3.0.3 - secure, fast, stable\nEnd of status'
+          }
+        },
+        22: {
+          'state': 'open',
+          'reason': 'syn-ack',
+          'name': 'ssh',
+          'product': 'OpenSSH',
+          'version': '7.9p1 Debian 10+deb10u2',
+          'extrainfo': 'protocol 2.0',
+          'conf': '10',
+          'cpe': 'cpe:/o:linux:linux_kernel',
+          'script': {
+            'ssh-hostkey': '\n  2048 c7:44:58:86:90:fd:e4:de:5b:0d:bf:07:8d:05:5d:d7 (RSA)\n  256 78:ec:47:0f:0f:53:aa:a6:05:48:84:80:94:76:a6:23 (ECDSA)\n  256 99:9c:39:11:dd:35:53:a0:29:11:20:c7:f8:bf:71:a4 (ED25519)'
+          }
+        },
+        80: {
+          'state': 'open',
+          'reason': 'syn-ack',
+          'name': 'http',
+          'product': 'Apache httpd',
+          'version': '2.4.38',
+          'extrainfo': '(Debian)',
+          'conf': '10',
+          'cpe': 'cpe:/a:apache:http_server:2.4.38',
+          'script': {
+            'http-server-header': 'Apache/2.4.38 (Debian)',
+            'http-title': 'Apache2 Debian Default Page: It works'
+          }
+        }
+      },
+      'osmatch': [
+        {
+          'name': 'Linux 4.15 - 5.8',
+          'accuracy': '100',
+          'line': '67250',
+          'osclass': [
+            {
+              'type': 'general purpose',
+              'vendor': 'Linux',
+              'osfamily': 'Linux',
+              'osgen': '4.X',
+              'accuracy': '100',
+              'cpe': [
+                'cpe:/o:linux:linux_kernel:4'
+              ]
+            },
+            {
+              'type': 'general purpose',
+              'vendor': 'Linux',
+              'osfamily': 'Linux',
+              'osgen': '5.X',
+              'accuracy': '100',
+              'cpe': [
+                'cpe:/o:linux:linux_kernel:5'
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
         """
 
         # Set items for scan_details_tableWidget
@@ -263,39 +299,93 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.scan_details_tableWidget.resizeColumnsToContents()
         for col in range(self.scan_details_tableWidget.columnCount()):
             column_width = self.scan_details_tableWidget.columnWidth(col)
-            self.scan_details_tableWidget.setColumnWidth(col, min(column_width, 200))
-
-        # Set items for host_details_tableWidget
-        self.host_details_tableWidget.setColumnCount(1)
-        self.host_details_tableWidget.setRowCount(1)
-        self.host_details_tableWidget.setHorizontalHeaderLabels(["Host Details"])
-
-        # Dump the scan output to the table widget, set entire scan output into one cell
-        self.host_details_tableWidget.setItem(0, 0, QTableWidgetItem(str(scan_output['scan'])))
+            self.scan_details_tableWidget.setColumnWidth(col, min(column_width, 300))
         
+        # Set items for host_details_tableWidget based on number of hosts detected, row count = number of services detected
+        for row, host in enumerate(scan_output['scan']):
+            if 'tcp' in scan_output['scan'][host]:
+                for service in scan_output['scan'][host]['tcp']:
+                    self.host_details_tableWidget.insertRow(row)
 
-        # for host, result in scan_output['scan'].items():
-        #     self.scan_output_text_browser.append(f"Scan results for {host}:\n")
+                    # Device IP
+                    self.host_details_tableWidget.setItem(row, 0, QTableWidgetItem(str(scan_output['scan'][host]['addresses']['ipv4'])))
 
-        #     # Check if 'tcp' key is present in the result dictionary
-        #     if 'tcp' in result:
-        #         # Iterate over the scan result items
-        #         for port, port_result in result['tcp'].items():
-        #             service_name = port_result['name']
-        #             state = port_result['state']
-        #             self.scan_output_text_browser.append(f"Port: {port}\tService: {service_name}\t\tState: {state}")
+                    # Device Type from os match name
+                    if 'osmatch' in scan_output['scan'][host]:
+                        self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str(scan_output['scan'][host]['osmatch'][0]['name'])))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str("")))
 
-        #             # Check if the service is SSH
-        #             if service_name.lower() == 'ssh' and state.lower() == 'open':
-        #                 self.scan_output_text_browser.append("Running Hydra to check SSH login...\n")
+                    # MAC address
+                    if 'mac' in scan_output['scan'][host]['addresses']:
+                        mac_address = scan_output['scan'][host]['addresses']['mac']
+                        self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str(mac_address)))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str("")))
+                    
+                    # Vendor
+                    if 'vendor' in scan_output['scan'][host]:
+                        if scan_output['scan'][host]['vendor'] == {}:
+                            self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str("")))
+                        else:
+                            self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str(scan_output['scan'][host]['vendor'][mac_address])))
 
-        #                 # Run Hydra for SSH service
-        #                 self.run_hydra(host)
+                    # Device Status remove brackets
+                    self.host_details_tableWidget.setItem(row, 4, QTableWidgetItem(str(scan_output['scan'][host]['status']['state'] + " due to " + scan_output['scan'][host]['status']['reason'])))
 
-        #     else:
-        #         self.scan_output_text_browser.append("No TCP port information available")
+                    # Service Name
+                    self.host_details_tableWidget.setItem(row, 5, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['name'])))
 
-        #     self.scan_output_text_browser.append("\n")  # Add a new line after each host
+                    # Service Port
+                    self.host_details_tableWidget.setItem(row, 6, QTableWidgetItem(str(service)))
+
+                    # State
+                    self.host_details_tableWidget.setItem(row, 7, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['state'])))
+
+                    # Software Product
+                    if 'product' in scan_output['scan'][host]['tcp'][service]:
+                        self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['product'])))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str("")))
+
+                    # Service Version
+                    if 'version' in scan_output['scan'][host]['tcp'][service]:
+                        self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['version'])))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str("")))
+
+                    # version information
+                    if 'extrainfo' in scan_output['scan'][host]['tcp'][service]:
+                        self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['extrainfo'])))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str("")))
+
+                    # cpe
+                    if 'cpe' in scan_output['scan'][host]['tcp'][service]:
+                        self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['cpe'])))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str("")))
+
+                    # script
+                    if 'script' in scan_output['scan'][host]['tcp'][service]:
+                        self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['script'])))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str("")))
+
+                    # Password Cracked
+                    # Run hydra if service is ssh otherwise put "N.A."
+                    if scan_output['scan'][host]['tcp'][service]['name'] == 'ssh':
+                        self.run_hydra(host, row)
+                    else:
+                        self.host_details_tableWidget.setItem(row, 13, QTableWidgetItem(str("N.A.")))
+
+                    # TODO: Reccomendation
+
+        # Resize columns to fit contents
+        self.host_details_tableWidget.resizeColumnsToContents()
+        for col in range(self.host_details_tableWidget.columnCount()):
+            column_width = self.host_details_tableWidget.columnWidth(col)
+            self.host_details_tableWidget.setColumnWidth(col, min(column_width, 300))
 
     def get_hydra_directory(self):
         downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
@@ -305,8 +395,9 @@ class Peruse(QMainWindow, Ui_Peruse):
         else:
             return None
 
-    def run_hydra(self, host):
+    def run_hydra(self, host, row):
         target = host
+        # ssh
         port = 22
         # grimmie:My_V3ryS3cur3_P4ss
         username = "grimmie"
@@ -314,7 +405,7 @@ class Peruse(QMainWindow, Ui_Peruse):
 
         hydra_dir = self.get_hydra_directory()
         if hydra_dir is None:
-            self.update_hydra_output("Hydra binaries are not found. Please make sure it is downloaded and extracted to Downloads folder\n")
+            self.update_hydra_output("Hydra binaries are not found. Please make sure it is downloaded and extracted to Downloads/thc-hydra-windows-master\n", row)
             return
 
         try:
@@ -330,20 +421,20 @@ class Peruse(QMainWindow, Ui_Peruse):
             stdout, stderr = process.communicate()
 
             output = stdout + stderr
-            self.update_hydra_output(output)
+            self.update_hydra_output(output, row)
 
             # Check if output contains successful login message
-            if "login successful" in output.lower():
-                self.update_hydra_output("Login successful!\n")
+            if "1 of 1 target successfully completed, 1 valid password found" in output:
+                self.update_hydra_output("Yes", row)
             else:
-                self.update_hydra_output("Login failed.\n")
+                self.update_hydra_output("No", row)
         except FileNotFoundError:
             self.update_hydra_output("Hydra command not found. Make sure the path to the Hydra application directory is correct.\n")
         except subprocess.CalledProcessError as e:
             self.update_hydra_output(f"Hydra command execution failed with error:\n{e}\n")
 
-    # def update_hydra_output(self, output):
-    #     self.scan_output_text_browser.append(output)
+    def update_hydra_output(self, output, row):
+        self.host_details_tableWidget.setItem(row, 13, QTableWidgetItem(str(output)))
 
     def about(self):
         QMessageBox.information(

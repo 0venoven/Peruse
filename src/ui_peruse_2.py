@@ -213,6 +213,38 @@ class Ui_Peruse(object):
         self.verticalLayout.addWidget(self.network_tip_label)
 
         self.host_details_tableWidget = QTableWidget(self.centralwidget)
+        if (self.host_details_tableWidget.columnCount() < 15):
+            self.host_details_tableWidget.setColumnCount(15)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        __qtablewidgetitem2 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(5, __qtablewidgetitem5)
+        __qtablewidgetitem6 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(6, __qtablewidgetitem6)
+        __qtablewidgetitem7 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(7, __qtablewidgetitem7)
+        __qtablewidgetitem8 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(8, __qtablewidgetitem8)
+        __qtablewidgetitem9 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(9, __qtablewidgetitem9)
+        __qtablewidgetitem10 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(10, __qtablewidgetitem10)
+        __qtablewidgetitem11 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(11, __qtablewidgetitem11)
+        __qtablewidgetitem12 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(12, __qtablewidgetitem12)
+        __qtablewidgetitem13 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(13, __qtablewidgetitem13)
+        __qtablewidgetitem14 = QTableWidgetItem()
+        self.host_details_tableWidget.setHorizontalHeaderItem(14, __qtablewidgetitem14)
         self.host_details_tableWidget.setObjectName(u"host_details_tableWidget")
         self.host_details_tableWidget.setGeometry(QRect(100, 450, 751, 441))
         self.host_details_tableWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -222,16 +254,16 @@ class Ui_Peruse(object):
         self.scan_details_tableWidget = QTableWidget(self.centralwidget)
         if (self.scan_details_tableWidget.columnCount() < 5):
             self.scan_details_tableWidget.setColumnCount(5)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.scan_details_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.scan_details_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.scan_details_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.scan_details_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.scan_details_tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        __qtablewidgetitem15 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem15)
+        __qtablewidgetitem16 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem16)
+        __qtablewidgetitem17 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem17)
+        __qtablewidgetitem18 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem18)
+        __qtablewidgetitem19 = QTableWidgetItem()
+        self.scan_details_tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem19)
         self.scan_details_tableWidget.setObjectName(u"scan_details_tableWidget")
         self.scan_details_tableWidget.setGeometry(QRect(100, 330, 751, 81))
         self.scan_details_tableWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -307,16 +339,46 @@ class Ui_Peruse(object):
         self.ip_range_label.setText(QCoreApplication.translate("Peruse", u"IP range:", None))
         self.scan_button.setText(QCoreApplication.translate("Peruse", u"Scan", None))
         self.network_tip_label.setText(QCoreApplication.translate("Peruse", u"If this is not a network that you own/want to scan, please change to the desired network. Also, as dictionary attacks (multiple login attempts) are used, please take note that it could potentially lock up your devices or cause other forms of harm.", None))
-        ___qtablewidgetitem = self.scan_details_tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("Peruse", u"Nmap Command", None));
-        ___qtablewidgetitem1 = self.scan_details_tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("Peruse", u"Scan Type", None));
-        ___qtablewidgetitem2 = self.scan_details_tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Peruse", u"Date Time", None));
-        ___qtablewidgetitem3 = self.scan_details_tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Peruse", u"Time Elapsed", None));
-        ___qtablewidgetitem4 = self.scan_details_tableWidget.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Peruse", u"Devices Detected", None));
+        ___qtablewidgetitem = self.host_details_tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Peruse", u"Device IP", None));
+        ___qtablewidgetitem1 = self.host_details_tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("Peruse", u"Device Type", None));
+        ___qtablewidgetitem2 = self.host_details_tableWidget.horizontalHeaderItem(2)
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Peruse", u"MAC Address", None));
+        ___qtablewidgetitem3 = self.host_details_tableWidget.horizontalHeaderItem(3)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Peruse", u"Vendor", None));
+        ___qtablewidgetitem4 = self.host_details_tableWidget.horizontalHeaderItem(4)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("Peruse", u"Device Status", None));
+        ___qtablewidgetitem5 = self.host_details_tableWidget.horizontalHeaderItem(5)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("Peruse", u"Service Name", None));
+        ___qtablewidgetitem6 = self.host_details_tableWidget.horizontalHeaderItem(6)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("Peruse", u"Service Port", None));
+        ___qtablewidgetitem7 = self.host_details_tableWidget.horizontalHeaderItem(7)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("Peruse", u"State", None));
+        ___qtablewidgetitem8 = self.host_details_tableWidget.horizontalHeaderItem(8)
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("Peruse", u"Software Product", None));
+        ___qtablewidgetitem9 = self.host_details_tableWidget.horizontalHeaderItem(9)
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("Peruse", u"Service Version", None));
+        ___qtablewidgetitem10 = self.host_details_tableWidget.horizontalHeaderItem(10)
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("Peruse", u"Version Information", None));
+        ___qtablewidgetitem11 = self.host_details_tableWidget.horizontalHeaderItem(11)
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("Peruse", u"CPE (Common Platform Enumeration)", None));
+        ___qtablewidgetitem12 = self.host_details_tableWidget.horizontalHeaderItem(12)
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("Peruse", u"Script", None));
+        ___qtablewidgetitem13 = self.host_details_tableWidget.horizontalHeaderItem(13)
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("Peruse", u"Password Cracked", None));
+        ___qtablewidgetitem14 = self.host_details_tableWidget.horizontalHeaderItem(14)
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("Peruse", u"Recommendation", None));
+        ___qtablewidgetitem15 = self.scan_details_tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("Peruse", u"Nmap Command", None));
+        ___qtablewidgetitem16 = self.scan_details_tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("Peruse", u"Scan Type", None));
+        ___qtablewidgetitem17 = self.scan_details_tableWidget.horizontalHeaderItem(2)
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("Peruse", u"Date Time", None));
+        ___qtablewidgetitem18 = self.scan_details_tableWidget.horizontalHeaderItem(3)
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("Peruse", u"Time Elapsed", None));
+        ___qtablewidgetitem19 = self.scan_details_tableWidget.horizontalHeaderItem(4)
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("Peruse", u"Devices Detected", None));
         self.host_details_label.setText(QCoreApplication.translate("Peruse", u"Host details :", None))
         self.menuScan.setTitle(QCoreApplication.translate("Peruse", u"Scan", None))
         self.menuTools.setTitle(QCoreApplication.translate("Peruse", u"Tools", None))
