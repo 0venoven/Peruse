@@ -120,7 +120,7 @@ class Database():
                     if scan_dict['scan'][host]['vendor'] == {}:
                         vendor = "N.A."
                     else:
-                        scan_dict['scan'][host]['vendor'][mac_address]
+                        vendor = scan_dict['scan'][host]['vendor'][mac_address]
 
                 # Device Status remove brackets
                 device_status = scan_dict['scan'][host]['status']['state'] + " due to " + scan_dict['scan'][host]['status']['reason']
@@ -165,13 +165,13 @@ class Database():
                         if 'cpe' in scan_dict['scan'][host]['tcp'][service]:
                             cpe = scan_dict['scan'][host]['tcp'][service]['cpe']
                         else:
-                            cpe = ""
+                            cpe = "N.A."
 
                         # script
                         if 'script' in scan_dict['scan'][host]['tcp'][service]:
-                            script = scan_dict['scan'][host]['tcp'][service]['script']
+                            script = str(scan_dict['scan'][host]['tcp'][service]['script'])
                         else:
-                            script = ""
+                            script = "N.A."
 
                         # is pw cracked or not
                         is_cracked = scan_dict['scan'][host]['tcp'][service]['is_cracked']

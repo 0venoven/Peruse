@@ -120,7 +120,7 @@ class Database():
                     if scan_dict['scan'][host]['vendor'] == {}:
                         vendor = "N.A."
                     else:
-                        scan_dict['scan'][host]['vendor'][mac_address]
+                        vendor = scan_dict['scan'][host]['vendor'][mac_address]
 
                 # Device Status remove brackets
                 device_status = scan_dict['scan'][host]['status']['state'] + " due to " + scan_dict['scan'][host]['status']['reason']
@@ -165,13 +165,13 @@ class Database():
                         if 'cpe' in scan_dict['scan'][host]['tcp'][service]:
                             cpe = scan_dict['scan'][host]['tcp'][service]['cpe']
                         else:
-                            cpe = ""
+                            cpe = "N.A."
 
                         # script
                         if 'script' in scan_dict['scan'][host]['tcp'][service]:
-                            script = scan_dict['scan'][host]['tcp'][service]['script']
+                            script = str(scan_dict['scan'][host]['tcp'][service]['script'])
                         else:
-                            script = ""
+                            script = "N.A."
 
                         # is pw cracked or not
                         is_cracked = scan_dict['scan'][host]['tcp'][service]['is_cracked']
@@ -266,6 +266,7 @@ sample_dict = {
       },
       'tcp': {
         21: {
+          'is_cracked': "yes",
           'state': 'open',
           'reason': 'syn-ack',
           'name': 'ftp',
@@ -275,12 +276,11 @@ sample_dict = {
           'conf': '10',
           'cpe': 'cpe:/a:vsftpd:vsftpd:3.0.3',
           'script': {
-            'ftp-anon': 'Anonymous FTP login allowed (FTP code 230)\n-rw-r--r--    1 1000     1000          776 May 30  2021 note.txt',
-            'ftp-syst': '\n  STAT:  \nFTP server status:\n     Connected to ::ffff:192.168.158.1\n     Logged in as ftp\n     TYPE: ASCII\n      No session bandwidth limit\n     Session timeout in seconds is 300\n     Control connection is plain text\n     Data connections will be plain text\n     At session startup, client count was 4\n     vsFTPd 3.0.3 - secure, fast, stable\nEnd of status'
+            'ftp-syst': 'blablablabla'
           }
         },
         22: {
-          'is_cracked': True,
+          'is_cracked': "yes",
           'state': 'open',
           'reason': 'syn-ack',
           'name': 'ssh',
@@ -290,10 +290,11 @@ sample_dict = {
           'conf': '10',
           'cpe': 'cpe:/o:linux:linux_kernel',
           'script': {
-            'ssh-hostkey': '\n  2048 c7:44:58:86:90:fd:e4:de:5b:0d:bf:07:8d:05:5d:d7 (RSA)\n  256 78:ec:47:0f:0f:53:aa:a6:05:48:84:80:94:76:a6:23 (ECDSA)\n  256 99:9c:39:11:dd:35:53:a0:29:11:20:c7:f8:bf:71:a4 (ED25519)'
+            'ssh-hostkey': 'blabla'
           }
         },
         80: {
+          'is_cracked': "yes",
           'state': 'open',
           'reason': 'syn-ack',
           'name': 'http',
@@ -303,8 +304,7 @@ sample_dict = {
           'conf': '10',
           'cpe': 'cpe:/a:apache:http_server:2.4.38',
           'script': {
-            'http-server-header': 'Apache/2.4.38 (Debian)',
-            'http-title': 'Apache2 Debian Default Page: It works'
+            'http-apache-server-status': 'blabla'
           }
         }
       },
