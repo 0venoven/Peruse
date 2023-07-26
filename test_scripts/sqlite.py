@@ -32,13 +32,24 @@ class Database():
                                         host_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                         scan_id INTEGER NOT NULL,
                                         host_ip TEXT NOT NULL,
+                                        device_type TEXT NOT NULL,
+                                        mac_address TEXT,
+                                        vendor TEXT,
+                                        device_status TEXT NOT NULL,
                                         FOREIGN KEY (scan_id) REFERENCES scan (scan_id));"""
         create_service_table = """ CREATE TABLE IF NOT EXISTS service (
                                         service_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                         host_id INTEGER NOT NULL,
                                         service_name TEXT NOT NULL,
-                                        port_no INTEGER NOT NULL,
-                                        pw_crakced BOOLEAN NOT NULL,
+                                        service_port INTEGER NOT NULL,
+                                        state TEXT NOT NULL,
+                                        software_product TEXT,
+                                        service_version TEXT,
+                                        version_information TEXT,
+                                        cpe TEXT,
+                                        script TEXT,
+                                        pw_cracked TEXT,
+                                        recommendation TEXT,
                                         FOREIGN KEY (host_id) REFERENCES host (host_id));"""
 
         conn = Database.create_connection()
@@ -79,30 +90,98 @@ class Database():
             print("Error: failed to get service results")
             print(e)
     
-    def insert_scan(network_name):
+    def insert_scan(network_name, scan_dict):
         conn = Database.create_connection()
         try:
             cur = conn.cursor()
             # insert into scan table
-            cur.execute("INSERT INTO scan (network_name, date_time) VALUES (?, datetime('now','localtime'))", [network_name])
+            cur.execute("INSERT INTO scan (network_name, date_time) VALUES (?, ?)", [network_name, scan_dict['nmap']['scanstats']['timestr']])
             conn.commit()
             # get latest scan no
             scan_id = cur.execute("SELECT MAX(scan_id) FROM scan").fetchone()[0]
-            # then check if scan_no is not none and insert into host table
-            # we need a for loop for this part for each host
-            host_ip = "192.168.0.108" # this is a placeholder for now
-            cur.execute("INSERT INTO host (scan_id, host_ip) VALUES (?, ?)", [scan_id, host_ip])
-            conn.commit()
-            # get latest host no
-            host_id = cur.execute("SELECT MAX(host_id) FROM host").fetchone()[0]
-            # then check if host_id is not none and insert into service table
-            # we need a for loop for this part for each service
-            # the vars below are placeholders for now
-            service_name = "ssh"
-            port_no = 22
-            pw_cracked = False
-            cur.execute("INSERT INTO service (host_id, service_name, port_no, pw_crakced) VALUES (?, ?, ?, ?)", [host_id, service_name, port_no, pw_cracked])
-            conn.commit()
+            # insert into host table
+            for host in scan_dict['scan']:
+                device_ip = scan_dict['scan'][host]['addresses']['ipv4']
+
+                # Device Type
+                if 'osmatch' in scan_dict['scan'][host]:
+                    device_type = scan_dict['scan'][host]['osmatch'][0]['name']
+                else:
+                    device_type = "N.A."
+
+                # Mac Address
+                if 'mac' in scan_dict['scan'][host]['addresses']:
+                    mac_address = scan_dict['scan'][host]['addresses']['mac']
+                else:
+                    mac_address = "N.A."
+
+                # Vendor
+                if 'vendor' in scan_dict['scan'][host]:
+                    if scan_dict['scan'][host]['vendor'] == {}:
+                        vendor = "N.A."
+                    else:
+                        scan_dict['scan'][host]['vendor'][mac_address]
+
+                # Device Status remove brackets
+                device_status = scan_dict['scan'][host]['status']['state'] + " due to " + scan_dict['scan'][host]['status']['reason']
+
+                # insert into host table
+                cur.execute("INSERT INTO host (scan_id, host_ip, device_type, mac_address, vendor, device_status) VALUES (?, ?, ?, ?, ?, ?)", [scan_id, device_ip, device_type, mac_address, vendor, device_status])
+                conn.commit()
+
+                if 'tcp' in scan_dict['scan'][host]:
+                    # get latest host no
+                    host_id = cur.execute("SELECT MAX(host_id) FROM host").fetchone()[0]
+
+                    for service in scan_dict['scan'][host]['tcp']:
+                        # Service Name
+                        service_name = scan_dict['scan'][host]['tcp'][service]['name']
+
+                        # Service Port
+                        service_port = service
+
+                        # State
+                        state = scan_dict['scan'][host]['tcp'][service]['state']
+
+                        # Software Product
+                        if 'product' in scan_dict['scan'][host]['tcp'][service]:
+                            software_product = scan_dict['scan'][host]['tcp'][service]['product']
+                        else:
+                            software_product = "N.A."
+
+                        # Service Version
+                        if 'version' in scan_dict['scan'][host]['tcp'][service]:
+                            service_version = scan_dict['scan'][host]['tcp'][service]['version']
+                        else:
+                            service_version = "N.A."
+
+                        # version information
+                        if 'extrainfo' in scan_dict['scan'][host]['tcp'][service]:
+                            version_information = scan_dict['scan'][host]['tcp'][service]['extrainfo']
+                        else:
+                            version_information = "N.A."
+
+                        # cpe
+                        if 'cpe' in scan_dict['scan'][host]['tcp'][service]:
+                            cpe = scan_dict['scan'][host]['tcp'][service]['cpe']
+                        else:
+                            cpe = ""
+
+                        # script
+                        if 'script' in scan_dict['scan'][host]['tcp'][service]:
+                            script = scan_dict['scan'][host]['tcp'][service]['script']
+                        else:
+                            script = ""
+
+                        # is pw cracked or not
+                        is_cracked = scan_dict['scan'][host]['tcp'][service]['is_cracked']
+
+                        # TODO: Reccomendation
+                        recommendation = "placeholder"
+
+                        # insert into service table
+                        cur.execute("INSERT INTO service (host_id, service_name, service_port, state, software_product, service_version, version_information, cpe, script, pw_cracked, recommendation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [host_id, service_name, service_port, state, software_product, service_version, version_information, cpe, script, is_cracked, recommendation])
+                        conn.commit()
         except Error as e:
             print("Error: failed to insert scan result")
             print(e)
@@ -146,11 +225,127 @@ class Database():
             print("Error: failed to get service results")
             print(e)
 
+sample_dict = {
+  'nmap': {
+    'command_line': 'nmap -oX - -A -T4 192.168.158.0/24',
+    'scaninfo': {
+      'tcp': {
+        'method': 'syn'
+      }
+    },
+    'scanstats': {
+      'timestr': 'Tue Jul 25 13:00:15 2023',
+      'elapsed': '77.20',
+      'uphosts': '3',
+      'downhosts': '253',
+      'totalhosts': '256'
+    }
+  },
+  'scan': {
+    '192.168.158.146': {
+      'hostnames': [
+        {
+          'name': '',
+          'type': ''
+        }
+      ],
+      'addresses': {
+        'ipv4': '192.168.158.146',
+        'mac': '00:0C:29:50:CD:DB'
+      },
+      'vendor': {
+        '00:0C:29:50:CD:DB': 'VMware'
+      },
+      'status': {
+        'state': 'up',
+        'reason': 'arp-response'
+      },
+      'uptime': {
+        'seconds': '3038809',
+        'lastboot': 'Tue Jun 20 08:52:45 2023'
+      },
+      'tcp': {
+        21: {
+          'state': 'open',
+          'reason': 'syn-ack',
+          'name': 'ftp',
+          'product': 'vsftpd',
+          'version': '3.0.3',
+          'extrainfo': '',
+          'conf': '10',
+          'cpe': 'cpe:/a:vsftpd:vsftpd:3.0.3',
+          'script': {
+            'ftp-anon': 'Anonymous FTP login allowed (FTP code 230)\n-rw-r--r--    1 1000     1000          776 May 30  2021 note.txt',
+            'ftp-syst': '\n  STAT:  \nFTP server status:\n     Connected to ::ffff:192.168.158.1\n     Logged in as ftp\n     TYPE: ASCII\n      No session bandwidth limit\n     Session timeout in seconds is 300\n     Control connection is plain text\n     Data connections will be plain text\n     At session startup, client count was 4\n     vsFTPd 3.0.3 - secure, fast, stable\nEnd of status'
+          }
+        },
+        22: {
+          'is_cracked': True,
+          'state': 'open',
+          'reason': 'syn-ack',
+          'name': 'ssh',
+          'product': 'OpenSSH',
+          'version': '7.9p1 Debian 10+deb10u2',
+          'extrainfo': 'protocol 2.0',
+          'conf': '10',
+          'cpe': 'cpe:/o:linux:linux_kernel',
+          'script': {
+            'ssh-hostkey': '\n  2048 c7:44:58:86:90:fd:e4:de:5b:0d:bf:07:8d:05:5d:d7 (RSA)\n  256 78:ec:47:0f:0f:53:aa:a6:05:48:84:80:94:76:a6:23 (ECDSA)\n  256 99:9c:39:11:dd:35:53:a0:29:11:20:c7:f8:bf:71:a4 (ED25519)'
+          }
+        },
+        80: {
+          'state': 'open',
+          'reason': 'syn-ack',
+          'name': 'http',
+          'product': 'Apache httpd',
+          'version': '2.4.38',
+          'extrainfo': '(Debian)',
+          'conf': '10',
+          'cpe': 'cpe:/a:apache:http_server:2.4.38',
+          'script': {
+            'http-server-header': 'Apache/2.4.38 (Debian)',
+            'http-title': 'Apache2 Debian Default Page: It works'
+          }
+        }
+      },
+      'osmatch': [
+        {
+          'name': 'Linux 4.15 - 5.8',
+          'accuracy': '100',
+          'line': '67250',
+          'osclass': [
+            {
+              'type': 'general purpose',
+              'vendor': 'Linux',
+              'osfamily': 'Linux',
+              'osgen': '4.X',
+              'accuracy': '100',
+              'cpe': [
+                'cpe:/o:linux:linux_kernel:4'
+              ]
+            },
+            {
+              'type': 'general purpose',
+              'vendor': 'Linux',
+              'osfamily': 'Linux',
+              'osgen': '5.X',
+              'accuracy': '100',
+              'cpe': [
+                'cpe:/o:linux:linux_kernel:5'
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
 Database.main()
-Database.insert_scan("wifi name")
-Database.insert_scan("wifi name")
+Database.insert_scan("wifi name", sample_dict)
+Database.insert_scan("wifi name", sample_dict)
 Database.delete_result(2)
-Database.insert_scan("wifi name")
+Database.insert_scan("wifi name", sample_dict)
 final = Database.get_all_scans()
 final2 = Database.get_all_hosts()
 final3 = Database.get_all_services()
@@ -172,19 +367,26 @@ TABLE scan {
 
 TABLE host{
     host_id INTEGER [pk, increment]
-    scan_id INTEGER
+    scan_id INTEGER [ref: > scan.scan_id]
     host_ip TEXT
+    device_type TEXT
+    mac_address TEXT
+    vendor TEXT
+    device_status TEXT
 }
 
 TABLE service{
     service_id INTEGER [pk, increment]
-    host_id INTEGER
+    host_id INTEGER [ref: > host.host_id]
     service_name TEXT
-    port_no INT
-    pw_crakced BOOLEAN
+    port_no INTEGER
+    status TEXT
+    software_product TEXT
+    service_version TEXT
+    version_information TEXT
+    cpe TEXT
+    script TEXT
+    recommendation TEXT
+    pw_cracked TEXT
 }
-
-Ref: host.scan_id > scan.scan_id
-
-Ref: service.host_id > host.host_id
 """

@@ -37,6 +37,9 @@ class Peruse(QMainWindow, Ui_Peruse):
         # Keep track of open ServicesWindows
         self.services_windows = []
 
+        # Keep track of current scan output
+        self.scan_dict = None
+
         self.scan_thread = None
         self.os = platform.system()
 
@@ -226,6 +229,7 @@ class Peruse(QMainWindow, Ui_Peruse):
           }
         },
         22: {
+          'is_cracked': True,
           'state': 'open',
           'reason': 'syn-ack',
           'name': 'ssh',
@@ -314,19 +318,19 @@ class Peruse(QMainWindow, Ui_Peruse):
                     if 'osmatch' in scan_output['scan'][host]:
                         self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str(scan_output['scan'][host]['osmatch'][0]['name'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str("")))
+                        self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str("N.A.")))
 
                     # MAC address
                     if 'mac' in scan_output['scan'][host]['addresses']:
                         mac_address = scan_output['scan'][host]['addresses']['mac']
                         self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str(mac_address)))
                     else:
-                        self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str("")))
+                        self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str("N.A.")))
                     
                     # Vendor
                     if 'vendor' in scan_output['scan'][host]:
                         if scan_output['scan'][host]['vendor'] == {}:
-                            self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str("")))
+                            self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str("N.A.")))
                         else:
                             self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str(scan_output['scan'][host]['vendor'][mac_address])))
 
@@ -346,38 +350,40 @@ class Peruse(QMainWindow, Ui_Peruse):
                     if 'product' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['product'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str("")))
+                        self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str("N.A.")))
 
                     # Service Version
                     if 'version' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['version'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str("")))
+                        self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str("N.A.")))
 
                     # version information
                     if 'extrainfo' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['extrainfo'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str("")))
+                        self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str("N.A.")))
 
                     # cpe
                     if 'cpe' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['cpe'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str("")))
+                        self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str("N.A.")))
 
                     # script
                     if 'script' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['script'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str("")))
+                        self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str("N.A.")))
 
                     # Password Cracked
                     # Run hydra if service is ssh otherwise put "N.A."
                     if scan_output['scan'][host]['tcp'][service]['name'] == 'ssh':
-                        self.run_hydra(host, row)
+                        self.run_hydra(host, row, scan_output)
                     else:
                         self.host_details_tableWidget.setItem(row, 13, QTableWidgetItem(str("N.A.")))
+                        # Add to scan_output dict: "is_cracked": "" under service
+                        scan_output['scan'][host]['tcp'][service]['is_cracked'] = ""
 
                     # TODO: Reccomendation
 
@@ -386,6 +392,9 @@ class Peruse(QMainWindow, Ui_Peruse):
         for col in range(self.host_details_tableWidget.columnCount()):
             column_width = self.host_details_tableWidget.columnWidth(col)
             self.host_details_tableWidget.setColumnWidth(col, min(column_width, 300))
+        
+        # Save scan output to self.scan_dict
+        self.scan_dict = scan_output
 
     def get_hydra_directory(self):
         downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
@@ -395,7 +404,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         else:
             return None
 
-    def run_hydra(self, host, row):
+    def run_hydra(self, host, row, scan_output):
         target = host
         # ssh
         port = 22
@@ -426,8 +435,12 @@ class Peruse(QMainWindow, Ui_Peruse):
             # Check if output contains successful login message
             if "1 of 1 target successfully completed, 1 valid password found" in output:
                 self.update_hydra_output("Yes", row)
+                # Add to scan_output dict: "is_cracked": True under service
+                scan_output['scan'][host]['tcp'][port]['is_cracked'] = "Yes"
             else:
                 self.update_hydra_output("No", row)
+                # Add to scan_output dict: "is_cracked": False under service
+                scan_output['scan'][host]['tcp'][port]['is_cracked'] = "No"
         except FileNotFoundError:
             self.update_hydra_output("Hydra command not found. Make sure the path to the Hydra application directory is correct.\n")
         except subprocess.CalledProcessError as e:

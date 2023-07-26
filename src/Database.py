@@ -32,13 +32,24 @@ class Database():
                                         host_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                         scan_id INTEGER NOT NULL,
                                         host_ip TEXT NOT NULL,
+                                        device_type TEXT NOT NULL,
+                                        mac_address TEXT,
+                                        vendor TEXT,
+                                        device_status TEXT NOT NULL,
                                         FOREIGN KEY (scan_id) REFERENCES scan (scan_id));"""
         create_service_table = """ CREATE TABLE IF NOT EXISTS service (
                                         service_id INTEGER PRIMARY KEY AUTOINCREMENT,
                                         host_id INTEGER NOT NULL,
                                         service_name TEXT NOT NULL,
-                                        port_no INTEGER NOT NULL,
-                                        pw_crakced BOOLEAN NOT NULL,
+                                        service_port INTEGER NOT NULL,
+                                        state TEXT NOT NULL,
+                                        software_product TEXT,
+                                        service_version TEXT,
+                                        version_information TEXT,
+                                        cpe TEXT,
+                                        script TEXT,
+                                        pw_cracked TEXT,
+                                        recommendation TEXT,
                                         FOREIGN KEY (host_id) REFERENCES host (host_id));"""
         
         conn = Database.create_connection()
@@ -79,30 +90,98 @@ class Database():
             print("Error: failed to get service results")
             print(e)
 
-    def insert_scan(network_name):
-        # prob nd to edit this fn later
-        # maybe accept more params (those that are placeholders for now)
+    def insert_scan(network_name, scan_dict):
         conn = Database.create_connection()
         try:
             cur = conn.cursor()
             # insert into scan table
-            cur.execute("INSERT INTO scan (network_name, date_time) VALUES (?, datetime('now','localtime'))", [network_name])
+            cur.execute("INSERT INTO scan (network_name, date_time) VALUES (?, ?)", [network_name, scan_dict['nmap']['scanstats']['timestr']])
             conn.commit()
             # get latest scan no
             scan_id = cur.execute("SELECT MAX(scan_id) FROM scan").fetchone()[0]
-            # insert each host into host table
-            host_ip = "192.168.0.108" # this is a placeholder for now
-            cur.execute("INSERT INTO host (scan_id, host_ip) VALUES (?, ?)", [scan_id, host_ip])
-            conn.commit()
-            # get latest host no
-            host_id = cur.execute("SELECT MAX(host_id) FROM host").fetchone()[0]
-            # insert each service into service table
-            # the vars below are placeholders for now
-            service_name = "ssh"
-            port_no = 22
-            pw_cracked = False
-            cur.execute("INSERT INTO service (host_id, service_name, port_no, pw_crakced) VALUES (?, ?, ?, ?)", [host_id, service_name, port_no, pw_cracked])
-            conn.commit()
+            # insert into host table
+            for host in scan_dict['scan']:
+                device_ip = scan_dict['scan'][host]['addresses']['ipv4']
+
+                # Device Type
+                if 'osmatch' in scan_dict['scan'][host]:
+                    device_type = scan_dict['scan'][host]['osmatch'][0]['name']
+                else:
+                    device_type = "N.A."
+
+                # Mac Address
+                if 'mac' in scan_dict['scan'][host]['addresses']:
+                    mac_address = scan_dict['scan'][host]['addresses']['mac']
+                else:
+                    mac_address = "N.A."
+
+                # Vendor
+                if 'vendor' in scan_dict['scan'][host]:
+                    if scan_dict['scan'][host]['vendor'] == {}:
+                        vendor = "N.A."
+                    else:
+                        scan_dict['scan'][host]['vendor'][mac_address]
+
+                # Device Status remove brackets
+                device_status = scan_dict['scan'][host]['status']['state'] + " due to " + scan_dict['scan'][host]['status']['reason']
+
+                # insert into host table
+                cur.execute("INSERT INTO host (scan_id, host_ip, device_type, mac_address, vendor, device_status) VALUES (?, ?, ?, ?, ?, ?)", [scan_id, device_ip, device_type, mac_address, vendor, device_status])
+                conn.commit()
+
+                if 'tcp' in scan_dict['scan'][host]:
+                    # get latest host no
+                    host_id = cur.execute("SELECT MAX(host_id) FROM host").fetchone()[0]
+
+                    for service in scan_dict['scan'][host]['tcp']:
+                        # Service Name
+                        service_name = scan_dict['scan'][host]['tcp'][service]['name']
+
+                        # Service Port
+                        service_port = service
+
+                        # State
+                        state = scan_dict['scan'][host]['tcp'][service]['state']
+
+                        # Software Product
+                        if 'product' in scan_dict['scan'][host]['tcp'][service]:
+                            software_product = scan_dict['scan'][host]['tcp'][service]['product']
+                        else:
+                            software_product = "N.A."
+
+                        # Service Version
+                        if 'version' in scan_dict['scan'][host]['tcp'][service]:
+                            service_version = scan_dict['scan'][host]['tcp'][service]['version']
+                        else:
+                            service_version = "N.A."
+
+                        # version information
+                        if 'extrainfo' in scan_dict['scan'][host]['tcp'][service]:
+                            version_information = scan_dict['scan'][host]['tcp'][service]['extrainfo']
+                        else:
+                            version_information = "N.A."
+
+                        # cpe
+                        if 'cpe' in scan_dict['scan'][host]['tcp'][service]:
+                            cpe = scan_dict['scan'][host]['tcp'][service]['cpe']
+                        else:
+                            cpe = ""
+
+                        # script
+                        if 'script' in scan_dict['scan'][host]['tcp'][service]:
+                            script = scan_dict['scan'][host]['tcp'][service]['script']
+                        else:
+                            script = ""
+
+                        # is pw cracked or not
+                        is_cracked = scan_dict['scan'][host]['tcp'][service]['is_cracked']
+
+                        # TODO: Reccomendation
+                        recommendation = "placeholder"
+
+                        # insert into service table
+                        cur.execute("INSERT INTO service (host_id, service_name, service_port, state, software_product, service_version, version_information, cpe, script, pw_cracked, recommendation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [host_id, service_name, service_port, state, software_product, service_version, version_information, cpe, script, is_cracked, recommendation])
+                        conn.commit()
         except Error as e:
             print("Error: failed to insert scan result")
             print(e)
