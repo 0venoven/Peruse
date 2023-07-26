@@ -17,23 +17,6 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.app = app
         self.setWindowTitle("Peruse")
 
-        self.actionQuit.triggered.connect(self.quit)
-        self.actionSearch.triggered.connect(self.search)
-        self.actionFilter.triggered.connect(self.filter)
-        self.actionAbout.triggered.connect(self.about)
-        self.actionAbout_QT.triggered.connect(self.aboutQt)
-        self.scan_button.clicked.connect(self.scan_confirm)
-
-        # Disable editing
-        self.scan_details_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
-        self.host_details_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
-
-        # Insert the data into the TableWidget here
-        # self.save_button.clicked.connect(self.save)?
-        # self.view_all_button.clicked.connect(self.view_all)?
-        # self.delete_button.clicked.connect(self.delete)?
-        # Take from db
-
         # Keep track of open ServicesWindows
         self.services_windows = []
 
@@ -43,12 +26,30 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.scan_thread = None
         self.os = platform.system()
 
-        # Call the function to get the connected SSID
-        connected_ssid = self.get_connected_ssid()
-
         # Get IP range from user's OS, set to PATH environment variable automatically
         ip_obj = IPRange(self.os)
         ip_range = ip_obj.get_ip_range()
+
+		# Call the function to get the connected SSID
+        connected_ssid = self.get_connected_ssid()
+
+        self.actionQuit.triggered.connect(self.quit)
+        self.actionSearch.triggered.connect(self.search)
+        self.actionFilter.triggered.connect(self.filter)
+        self.actionAbout.triggered.connect(self.about)
+        self.actionAbout_QT.triggered.connect(self.aboutQt)
+        self.scan_button.clicked.connect(self.scan_confirm)
+        self.save_button.clicked.connect(Database.insert_scan(connected_ssid, self.scan_dict))
+        # self.view_all_button.clicked.connect(self.view_all)
+        # self.delete_button.clicked.connect(self.delete)      ?
+
+        # clear button clears both scan_details_tableWidget and host_details_tableWidget
+        self.clear_button.clicked.connect(self.scan_details_tableWidget.clearContents)
+        self.clear_button.clicked.connect(self.host_details_tableWidget.clearContents)
+
+        # Disable editing
+        self.scan_details_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.host_details_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
 
         self.current_network_lineEdit.setText(connected_ssid)
         self.ip_range_lineEdit.setText(ip_range)
