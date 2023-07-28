@@ -104,7 +104,7 @@ class Database():
                 device_ip = scan_dict['scan'][host]['addresses']['ipv4']
 
                 # Device Type
-                if 'osmatch' in scan_dict['scan'][host]:
+                if 'osmatch' in scan_dict['scan'][host] and scan_dict['scan'][host]['osmatch']:
                     device_type = scan_dict['scan'][host]['osmatch'][0]['name']
                 else:
                     device_type = "N.A."
