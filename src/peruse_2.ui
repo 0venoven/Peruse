@@ -473,10 +473,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <string>Nmap Command</string>
      </property>
      <property name="toolTip">
-      <string extracomment="this is a tool tip"/>
+      <string>this is a tool tip</string>
      </property>
      <property name="whatsThis">
-      <string extracomment="this is a whatsthis"/>
+      <string>this is a whatsthis</string>
      </property>
      <property name="textAlignment">
       <set>AlignLeading|AlignVCenter</set>

@@ -92,7 +92,7 @@ class Database():
 
     def insert_scan(network_name, scan_dict):
         conn = Database.create_connection()
-        try:
+        try: 
             cur = conn.cursor()
             # insert into scan table
             cur.execute("INSERT INTO scan (network_name, date_time) VALUES (?, ?)", [network_name, scan_dict['nmap']['scanstats']['timestr']])

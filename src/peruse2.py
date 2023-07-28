@@ -39,7 +39,6 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.actionAbout.triggered.connect(self.about)
         self.actionAbout_QT.triggered.connect(self.aboutQt)
         self.scan_button.clicked.connect(self.scan_confirm)
-        self.save_button.clicked.connect(Database.insert_scan(connected_ssid, self.scan_dict))
         # self.view_all_button.clicked.connect(self.view_all)
         # self.delete_button.clicked.connect(self.delete)      ?
 
@@ -115,7 +114,7 @@ class Peruse(QMainWindow, Ui_Peruse):
     
     def save(self):
         # TODO: edit this fn to get the necessary data from UI
-        Database.insert_scan(self.db_path, self.current_network_lineEdit.text())
+        Database.insert_scan(self.current_network_lineEdit.text(), self.scan_dict)
     
     def view_all(self):
         final = Database.get_all_scans(self.db_path)
@@ -396,6 +395,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         
         # Save scan output to self.scan_dict
         self.scan_dict = scan_output
+        self.save_button.clicked.connect(self.save)
 
     def get_hydra_directory(self):
         downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
