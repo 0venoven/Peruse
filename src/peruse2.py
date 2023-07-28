@@ -398,14 +398,15 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.save_button.clicked.connect(self.save)
 
     def get_hydra_directory(self):
-        downloads_dir = os.path.join(os.path.expanduser('~'), 'Downloads')
-        hydra_folder = os.path.join(downloads_dir, 'thc-hydra-windows-master')
-        if os.path.exists(hydra_folder) and os.path.isdir(hydra_folder):
-            return hydra_folder
-        else:
-            return None
+        # hydra folder ("thc-hydra-windows-master") is now in the same directory as peruse.py, check if it exists before returning
+        if os.path.exists("thc-hydra-windows-master") and os.path.isdir("thc-hydra-windows-master"):
+            return os.path.join(os.getcwd(), "thc-hydra-windows-master")
 
     def run_hydra(self, host, row, scan_output):
+
+        # Before running Hydra, save the current working directory of peruse.py
+        peruse_cwd = os.getcwd()
+
         target = host
         # ssh
         port = 22
@@ -433,6 +434,9 @@ class Peruse(QMainWindow, Ui_Peruse):
             output = stdout + stderr
             self.update_hydra_output(output, row)
 
+            # cd back to previous working directory of peruse.py
+            os.chdir(peruse_cwd)
+
             # Check if output contains successful login message
             if "1 of 1 target successfully completed, 1 valid password found" in output:
                 self.update_hydra_output("Yes", row)
@@ -446,6 +450,8 @@ class Peruse(QMainWindow, Ui_Peruse):
             self.update_hydra_output("Hydra command not found. Make sure the path to the Hydra application directory is correct.\n")
         except subprocess.CalledProcessError as e:
             self.update_hydra_output(f"Hydra command execution failed with error:\n{e}\n")
+        except Exception as e:
+            self.update_hydra_output(f"An unexpected error has occurred:\n{e}\n")
 
     def update_hydra_output(self, output, row):
         self.host_details_tableWidget.setItem(row, 13, QTableWidgetItem(str(output)))
