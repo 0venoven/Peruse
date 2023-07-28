@@ -306,7 +306,7 @@ class Peruse(QMainWindow, Ui_Peruse):
             self.scan_details_tableWidget.setColumnWidth(col, min(column_width, 300))
         
         # Set items for host_details_tableWidget based on number of hosts detected, row count = number of services detected
-        for row, host in enumerate(scan_output['scan']):
+        for row, host in enumerate(scan_output['scan']): 
             if 'tcp' in scan_output['scan'][host]:
                 for service in scan_output['scan'][host]['tcp']:
                     self.host_details_tableWidget.insertRow(row)
@@ -315,28 +315,28 @@ class Peruse(QMainWindow, Ui_Peruse):
                     self.host_details_tableWidget.setItem(row, 0, QTableWidgetItem(str(scan_output['scan'][host]['addresses']['ipv4'])))
 
                     # Device Type from os match name
-                    if 'osmatch' in scan_output['scan'][host]:
+                    if 'osmatch' in scan_output['scan'][host] and scan_output['scan'][host]['osmatch']:
                         self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str(scan_output['scan'][host]['osmatch'][0]['name'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str("N.A.")))
+                        self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str("")))
 
                     # MAC address
                     if 'mac' in scan_output['scan'][host]['addresses']:
                         mac_address = scan_output['scan'][host]['addresses']['mac']
                         self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str(mac_address)))
                     else:
-                        self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str("N.A.")))
-                    
+                        self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str("")))
+
                     # Vendor
                     if 'vendor' in scan_output['scan'][host]:
                         if scan_output['scan'][host]['vendor'] == {}:
-                            self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str("N.A.")))
+                            self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str("")))
                         else:
                             self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str(scan_output['scan'][host]['vendor'][mac_address])))
 
                     # Device Status remove brackets
                     self.host_details_tableWidget.setItem(row, 4, QTableWidgetItem(str(scan_output['scan'][host]['status']['state'] + " due to " + scan_output['scan'][host]['status']['reason'])))
-
+ 
                     # Service Name
                     self.host_details_tableWidget.setItem(row, 5, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['name'])))
 
@@ -350,31 +350,31 @@ class Peruse(QMainWindow, Ui_Peruse):
                     if 'product' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['product'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str("N.A.")))
+                        self.host_details_tableWidget.setItem(row, 8, QTableWidgetItem(str("")))
 
                     # Service Version
                     if 'version' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['version'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str("N.A.")))
+                        self.host_details_tableWidget.setItem(row, 9, QTableWidgetItem(str("")))
 
                     # version information
                     if 'extrainfo' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['extrainfo'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str("N.A.")))
+                        self.host_details_tableWidget.setItem(row, 10, QTableWidgetItem(str("")))
 
                     # cpe
                     if 'cpe' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['cpe'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str("N.A.")))
+                        self.host_details_tableWidget.setItem(row, 11, QTableWidgetItem(str("")))
 
                     # script
                     if 'script' in scan_output['scan'][host]['tcp'][service]:
                         self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str(scan_output['scan'][host]['tcp'][service]['script'])))
                     else:
-                        self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str("N.A.")))
+                        self.host_details_tableWidget.setItem(row, 12, QTableWidgetItem(str("")))
 
                     # Password Cracked
                     # Run hydra if service is ssh otherwise put "N.A."
@@ -382,10 +382,43 @@ class Peruse(QMainWindow, Ui_Peruse):
                         self.run_hydra(host, row, scan_output)
                     else:
                         self.host_details_tableWidget.setItem(row, 13, QTableWidgetItem(str("N.A.")))
-                        # Add to scan_output dict: "is_cracked": "" under service
-                        scan_output['scan'][host]['tcp'][service]['is_cracked'] = ""
+                        # Add to scan_output dict: "is_cracked": "N.A." under service
+                        scan_output['scan'][host]['tcp'][service]['is_cracked'] = "N.A."
 
                     # TODO: Reccomendation
+            else: # if no services detected
+                self.host_details_tableWidget.insertRow(row)
+
+                # Device IP
+                self.host_details_tableWidget.setItem(row, 0, QTableWidgetItem(str(scan_output['scan'][host]['addresses']['ipv4'])))
+
+                # Device Type from os match name
+                if 'osmatch' in scan_output['scan'][host] and scan_output['scan'][host]['osmatch']:
+                    self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str(scan_output['scan'][host]['osmatch'][0]['name'])))
+                else:
+                    self.host_details_tableWidget.setItem(row, 1, QTableWidgetItem(str("")))
+
+                # MAC address
+                if 'mac' in scan_output['scan'][host]['addresses']:
+                    mac_address = scan_output['scan'][host]['addresses']['mac']
+                    self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str(mac_address)))
+                else:
+                    self.host_details_tableWidget.setItem(row, 2, QTableWidgetItem(str("")))
+
+                # Vendor
+                if 'vendor' in scan_output['scan'][host]:
+                    if scan_output['scan'][host]['vendor'] == {}:
+                        self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str("")))
+                    else:
+                        self.host_details_tableWidget.setItem(row, 3, QTableWidgetItem(str(scan_output['scan'][host]['vendor'][mac_address])))
+
+                # Device Status remove brackets
+                self.host_details_tableWidget.setItem(row, 4, QTableWidgetItem(str(scan_output['scan'][host]['status']['state'] + " due to " + scan_output['scan'][host]['status']['reason'])))
+
+                # fill up remaining columns with empty strings
+                for i in range(5, 13):
+                    self.host_details_tableWidget.setItem(row, i, QTableWidgetItem(""))
+                self.host_details_tableWidget.setItem(row, 13, QTableWidgetItem("N.A."))
 
         # Resize columns to fit contents
         self.host_details_tableWidget.resizeColumnsToContents()

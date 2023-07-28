@@ -89,13 +89,30 @@ class Database():
         except Error as e:
             print("Error: failed to get service results")
             print(e)
+    
+    def check_duplicate(network_name, scan_time):
+        conn = Database.create_connection()
+        try:
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM scan WHERE network_name = ? AND date_time = ?", [network_name, scan_time])
+            return cur.fetchone()
+        except Error as e:
+            print("Error: failed to check for duplicate scan results")
+            print(e)
 
     def insert_scan(network_name, scan_dict):
         conn = Database.create_connection()
         try: 
             cur = conn.cursor()
+
+            timestamp = scan_dict['nmap']['scanstats']['timestr']
+            # check for duplicate
+            if Database.check_duplicate(network_name, timestamp):
+                print("Cannot save result: existing record is found in database")
+                return
+
             # insert into scan table
-            cur.execute("INSERT INTO scan (network_name, date_time) VALUES (?, ?)", [network_name, scan_dict['nmap']['scanstats']['timestr']])
+            cur.execute("INSERT INTO scan (network_name, date_time) VALUES (?, ?)", [network_name, timestamp])
             conn.commit()
             # get latest scan no
             scan_id = cur.execute("SELECT MAX(scan_id) FROM scan").fetchone()[0]
@@ -107,18 +124,18 @@ class Database():
                 if 'osmatch' in scan_dict['scan'][host] and scan_dict['scan'][host]['osmatch']:
                     device_type = scan_dict['scan'][host]['osmatch'][0]['name']
                 else:
-                    device_type = "N.A."
+                    device_type = ""
 
                 # Mac Address
                 if 'mac' in scan_dict['scan'][host]['addresses']:
                     mac_address = scan_dict['scan'][host]['addresses']['mac']
                 else:
-                    mac_address = "N.A."
+                    mac_address = ""
 
                 # Vendor
                 if 'vendor' in scan_dict['scan'][host]:
                     if scan_dict['scan'][host]['vendor'] == {}:
-                        vendor = "N.A."
+                        vendor = ""
                     else:
                         vendor = scan_dict['scan'][host]['vendor'][mac_address]
 
@@ -147,31 +164,31 @@ class Database():
                         if 'product' in scan_dict['scan'][host]['tcp'][service]:
                             software_product = scan_dict['scan'][host]['tcp'][service]['product']
                         else:
-                            software_product = "N.A."
+                            software_product = ""
 
                         # Service Version
                         if 'version' in scan_dict['scan'][host]['tcp'][service]:
                             service_version = scan_dict['scan'][host]['tcp'][service]['version']
                         else:
-                            service_version = "N.A."
+                            service_version = ""
 
                         # version information
                         if 'extrainfo' in scan_dict['scan'][host]['tcp'][service]:
                             version_information = scan_dict['scan'][host]['tcp'][service]['extrainfo']
                         else:
-                            version_information = "N.A."
+                            version_information = ""
 
                         # cpe
                         if 'cpe' in scan_dict['scan'][host]['tcp'][service]:
                             cpe = scan_dict['scan'][host]['tcp'][service]['cpe']
                         else:
-                            cpe = "N.A."
+                            cpe = ""
 
                         # script
                         if 'script' in scan_dict['scan'][host]['tcp'][service]:
                             script = str(scan_dict['scan'][host]['tcp'][service]['script'])
                         else:
-                            script = "N.A."
+                            script = ""
 
                         # is pw cracked or not
                         is_cracked = scan_dict['scan'][host]['tcp'][service]['is_cracked']
