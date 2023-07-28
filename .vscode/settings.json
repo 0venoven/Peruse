@@ -1,0 +1,4 @@
+{
+    "C_Cpp.inlayHints.parameterNames.hideLeadingUnderscores": true,
+    "python.createEnvironment.contentButton": "hide"
+}
