@@ -39,7 +39,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.actionAbout.triggered.connect(self.about)
         self.actionAbout_QT.triggered.connect(self.aboutQt)
         self.scan_button.clicked.connect(self.scan_confirm)
-        # self.view_all_button.clicked.connect(self.view_all)
+        self.view_all_button.clicked.connect(self.populate_table)
         # self.delete_button.clicked.connect(self.delete)      ?
 
         # clear button clears both scan_details_tableWidget and host_details_tableWidget
@@ -61,20 +61,13 @@ class Peruse(QMainWindow, Ui_Peruse):
 
         # Configure the table widget
         self.scans_tableWidget.setColumnCount(3)
-        self.scans_tableWidget.setHorizontalHeaderLabels(["Scan ID", "Network Name", "Date/Time"])
+        self.scans_tableWidget.setHorizontalHeaderLabels(["Scan ID", "Network Name", "Timestamp"])
 
         # Disable editing
         self.scans_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
 
-        # Add sample data
-        scan_data = [
-            (1, "network1", "2021-09-01 12:00:00"),
-            (2, "network2", "2021-09-02 12:00:00"),
-            (3, "network3", "2021-09-03 12:00:00"),
-        ]
-
-        # get actual data from db (uncomment the below after integration with db)
-        # scan_data = Database.get_all_scans()
+        # get data from db
+        scan_data = Database.get_all_scans()
 
         # Insert the data into the TableWidget
         for row, (scan_id, network_name, datetime) in enumerate(scan_data):
@@ -113,18 +106,11 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.app.quit()  # TODO: Replace with filter function
     
     def save(self):
-        # TODO: edit this fn to get the necessary data from UI
         Database.insert_scan(self.current_network_lineEdit.text(), self.scan_dict)
-    
-    def view_all(self):
-        final = Database.get_all_scans(self.db_path)
-        for row in final:
-            print(row) # row is a tuple
-            # TODO: show results in table properly on UI
     
     def delete(self):
         # TODO: get scan number from UI
-        Database.delete_result(self.db_path, 1) # where 1 is scan id
+        Database.delete_result(1) # where 1 is scan id
 
     def get_connected_ssid(self):
         try:
