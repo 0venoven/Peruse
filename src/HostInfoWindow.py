@@ -10,8 +10,8 @@ class HostInfoWindow(QMainWindow):
 
         # Create the table widget for host information
         self.table_widget = QTableWidget(self)
-        self.table_widget.setColumnCount(3)
-        self.table_widget.setHorizontalHeaderLabels(["Host ID", "Scan ID", "Host IP"])
+        self.table_widget.setColumnCount(7)
+        self.table_widget.setHorizontalHeaderLabels(["Host ID", "Scan ID", "Host IP", "Device Type", "MAC address", "Vendor", "Device Status"])
 
         # Disable editing
         self.table_widget.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -27,20 +27,19 @@ class HostInfoWindow(QMainWindow):
         self.setCentralWidget(central_widget)
 
     def populate_table(self, scan_id):
-        # This is just sample data to populate the table widget
-        host_data = [
-            (1, scan_id, "Host 1 Info"),
-            (2, scan_id, "Host 2 Info"),
-        ]
 
         # get actual data from the database
-        # host_data = Database.get_hosts(scan_id)
+        host_data = Database.get_hosts(scan_id)
 
-        for row, (host_id, scan_id, host_ip) in enumerate(host_data):
+        for row, (host_id, scan_id, host_ip, device_type, mac_address, vendor, device_status) in enumerate(host_data):
             self.table_widget.insertRow(row)
             self.table_widget.setItem(row, 0, QTableWidgetItem(str(host_id)))
             self.table_widget.setItem(row, 1, QTableWidgetItem(str(scan_id)))
             self.table_widget.setItem(row, 2, QTableWidgetItem(host_ip))
+            self.table_widget.setItem(row, 3, QTableWidgetItem(device_type))
+            self.table_widget.setItem(row, 4, QTableWidgetItem(mac_address))
+            self.table_widget.setItem(row, 5, QTableWidgetItem(vendor))
+            self.table_widget.setItem(row, 6, QTableWidgetItem(device_status))
 
     def contextMenuEvent(self, event):
         menu = QMenu(self)
