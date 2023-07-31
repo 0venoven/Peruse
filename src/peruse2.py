@@ -45,6 +45,8 @@ class Peruse(QMainWindow, Ui_Peruse):
         # clear button clears both scan_details_tableWidget and host_details_tableWidget
         self.clear_button.clicked.connect(self.scan_details_tableWidget.clearContents)
         self.clear_button.clicked.connect(self.host_details_tableWidget.clearContents)
+        self.clear_button.clicked.connect(self.scan_details_tableWidget.setRowCount(0))
+        self.clear_button.clicked.connect(self.host_details_tableWidget.setRowCount(0))
 
         # Disable editing
         self.scan_details_tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -58,6 +60,13 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.populate_table()
 
     def populate_table(self):
+
+        # Show that the search is in progress
+        self.is_searching_label.setText("Searching, please wait patiently, this may take a while...")
+
+        # Clear the table widget and reset the column and row count
+        self.scans_tableWidget.clearContents()
+        self.scans_tableWidget.setRowCount(0)
 
         # Configure the table widget
         self.scans_tableWidget.setColumnCount(3)
@@ -76,6 +85,14 @@ class Peruse(QMainWindow, Ui_Peruse):
             self.scans_tableWidget.setItem(row, 1, QTableWidgetItem(network_name))
             self.scans_tableWidget.setItem(row, 2, QTableWidgetItem(datetime))
 
+        # Resize columns to fit contents
+        self.scans_tableWidget.resizeColumnsToContents()
+        for col in range(self.scans_tableWidget.columnCount()):
+            column_width = self.scans_tableWidget.columnWidth(col)
+            self.scans_tableWidget.setColumnWidth(col, min(column_width, 300))
+
+        # Show that the search is complete
+        self.is_searching_label.setText("Select a row and right-click to view host and service information.")
     
     def contextMenuEvent(self, event):
         menu = QMenu(self)
@@ -130,11 +147,15 @@ class Peruse(QMainWindow, Ui_Peruse):
 
     def scan(self):
 
+        if self.ip_range_lineEdit.text() == "":
+            self.is_scanning_label.setText("No IP range detected. Please make sure you are connected to the network before trying again.")
+            return
+        else:
+            # Users can input their own IP range if what was detected was somehow wrong
+            ip_range = self.ip_range_lineEdit.text()
+
         def get_nmap_directory():
             return r"C:\Program Files (x86)\Nmap"
-
-        # Users to enter their own IP range
-        ip_range = self.ip_range_lineEdit.text()
 
         nmap_dir = get_nmap_directory()
 
@@ -146,14 +167,15 @@ class Peruse(QMainWindow, Ui_Peruse):
         # Clear the table widgets
         self.scan_details_tableWidget.clearContents()
         self.host_details_tableWidget.clearContents()
+        self.scan_details_tableWidget.setRowCount(0)
+        self.host_details_tableWidget.setRowCount(0)
         # self.scan_output_text_browser.append(f"Scanning {ip_range}...")
-
-        # if ip_range is None:
-        #     self.scan_output_text_browser.append(f"No IP range detected. Please make sure you are connected to the network.")
 
         # Create and start the scanning thread
         #else:
         self.scan_thread = ScanThread(ip_range)
+        # Show that the scan is in progress
+        self.is_scanning_label.setText("Scanning, please wait patiently, this may take a while...")
         self.scan_thread.scanFinished.connect(self.process_scan_results)
         self.scan_thread.start()
 
@@ -416,6 +438,9 @@ class Peruse(QMainWindow, Ui_Peruse):
         self.scan_dict = scan_output
         self.save_button.clicked.connect(self.save)
 
+        # Show that the scan is complete
+        self.is_scanning_label.setText("Scan complete! You can save the scan results to a local database file or start a new scan.")
+
     def get_hydra_directory(self):
         # hydra folder ("thc-hydra-windows-master") is now in the same directory as peruse.py, check if it exists before returning
         if os.path.exists("thc-hydra-windows-master") and os.path.isdir("thc-hydra-windows-master"):
@@ -479,7 +504,7 @@ class Peruse(QMainWindow, Ui_Peruse):
         QMessageBox.information(
             self,
             "About Peruse",
-            "Peruse is a Proof-of-Concept IoT Vulnerability Scanner, created to empower non-technical users to identify and mitigate vulnerabilities in their IoT devices and networks and to better study Singapore's IoT security landscape with the use of anonymized data. By using this software, you are agreeing to send your anonymized data to us for use in national security.\n\nNote: Any legal issues arising from using this software will be the sole responsibility of the user. Please use this software only on devices and networks that you own or are authorized to test."
+            "Peruse is a Proof-of-Concept IoT Vulnerability Scanner, created to empower non-technical users to identify and mitigate vulnerabilities in their IoT devices and networks and to better study Singapore's IoT security landscape with the use of anonymized data. By using this software, you are agreeing to send your pseudonymized data to us for use in national security.\n\nNote: Any legal issues arising from using this software will be the sole responsibility of the user. Please use this software only on devices and networks that you own or are authorized to test."
         )
 
     def aboutQt(self):
