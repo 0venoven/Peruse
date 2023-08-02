@@ -1,0 +1,7 @@
+Tutorial
+Recommendation (Dictionary/database?)
+LinPEAS (find out if it is possible to integrate it)
+Data analytics
+Extend the list of services to crack beyond just SSH
+Implement delete button
+Implement search & filter functions
