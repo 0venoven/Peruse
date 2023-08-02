@@ -15,7 +15,7 @@ As Peruse is still in its initial stages of development, it has a few limitation
 - app is limited to running on windows for now
 - lack of ability to check for password policies (possible integration with winpeas to do so)
 - lack of a scoring system
-- no device fingerprinting
+- limited device fingerprinting
 
 ## Areas to explore
 ### Possible ways to identify IoT firmware and their known vulnerabilities:
