@@ -1,3 +1,7 @@
+# Overview
+
+- go to https://github.com/0venoven/Peruse/blob/main/docs/overview.md
+
 # Setting up
 
 ## On Windows
