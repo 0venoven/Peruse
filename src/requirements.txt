@@ -1,4 +1,4 @@
 PySide6==6.5.1.1
 python-nmap==0.7.1
-Pillow==9.5.0
+Pillow>=10.2.0
 captcha==0.4
